@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>SEEN Login</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            list-style-type: none;
+            border: none;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #000;
+            /* Pushes content down slightly to respect the iPhone Notch/Status bar area */
+            padding-top: env(safe-area-inset-top);
+        }
+
+        #bg-video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        .content {
+            position: relative;
+            width: 90%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            padding: 40px 25px;
+            z-index: 1;
+        }
+
+        .content h2 {
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .content .input-box {
+            position: relative;
+            width: 100%;
+            height: 60px;
+            margin: 25px 0;
+        }
+
+        .content .input-box input {
+            background: transparent;
+            width: 100%;
+            height: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 15px;
+            padding: 0 50px 0 20px;
+            font-size: 16px;
+        }
+
+        .input-box i {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .content .remember {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 15px 5px;
+            font-size: 14px;
+        }
+
+        .btnn {
+            background: #fff;
+            color: #000;
+            width: 100%;
+            border-radius: 15px;
+            font-size: 18px;
+            height: 55px;
+            font-weight: 600;
+            margin-top: 10px;
+            margin-bottom: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            font-size: 14px;
+        }
+
+        .button a {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<video autoplay muted loop playsinline preload="auto" id="bg-video">
+    <source src="video.mp4" type="video/mp4">
+</video>
+
+<div class="content">
+  <form action="">
+    <h2>SEEN</h2>
+    <div class="input-box">
+      <input type="text" placeholder="Username" required />
+      <i class="ri-user-fill"></i>
+    </div>
+    <div class="input-box">
+      <input type="password" id="password" placeholder="Password" required autocomplete="new-password" />
+      <i class="ri-eye-off-fill toggle-password" id="togglePassword"></i>
+    </div>
+    <div class="remember">
+      <label><input type="checkbox" style="margin-right: 8px;"/>Remember</label>
+      <a href="#" style="color: #fff;">Forgot Password?</a>
+    </div>
+    <button type="submit" class="btnn">Login</button>
+    <div class="button">
+      <a href="#"><i class="ri-google-fill"></i> Google</a>
+      <span style="opacity: 0.5;">or</span>
+      <a href="#"><i class="ri-facebook-fill"></i> Facebook</a>
+    </div>
+  </form>
+</div>
+
+<script>
+    const input = document.getElementById("password");
+    const toggle = document.getElementById("togglePassword");
+    const video = document.getElementById("bg-video");
+
+    // Force Play Function for Low Power Mode
+    function handleForcePlay() {
+        if (video.paused) {
+            video.play().catch(e => console.log("Waiting for user tap..."));
+        }
+    }
+
+    // Attempt play on load
+    window.addEventListener('load', handleForcePlay);
+
+    // Bypasses low power mode restrictions on first user interaction
+    document.body.addEventListener('touchstart', handleForcePlay, { once: true });
+    document.body.addEventListener('click', handleForcePlay, { once: true });
+
+    // Password Visibility Toggle
+    toggle.addEventListener("click", () => {
+        const isPassword = input.type === "password";
+        input.type = isPassword ? "text" : "password";
+        toggle.className = isPassword ? "ri-eye-fill" : "ri-eye-off-fill";
+    });
+</script>
+
+</body>
+</html>
