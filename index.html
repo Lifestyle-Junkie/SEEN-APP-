@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Mobile Login</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -27,21 +33,19 @@
             justify-content: center;
             overflow: hidden;
             background: #000;
+            /* Pushes content down slightly so it doesn't hit the clock/notch */
+            padding-top: env(safe-area-inset-top);
         }
 
-        /* Video Background Fixed for GitHub/Mobile */
         #bg-video {
             position: fixed;
             top: 50%;
             left: 50%;
             min-width: 100%;
             min-height: 100%;
-            width: auto;
-            height: auto;
             z-index: -1;
             transform: translate(-50%, -50%);
             object-fit: cover;
-            background-size: cover;
         }
 
         .content {
@@ -51,6 +55,7 @@
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px); /* Safari support */
             border-radius: 20px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             padding: 40px 25px;
@@ -130,9 +135,8 @@
 </head>
 <body>
 
-<video autoplay muted loop playsinline id="bg-video">
+<video autoplay muted loop playsinline preload="auto" id="bg-video">
     <source src="video.mp4" type="video/mp4">
-    Your browser does not support HTML5 video.
 </video>
 
 <div class="content">
@@ -162,7 +166,23 @@
 <script>
     const input = document.getElementById("password");
     const toggle = document.getElementById("togglePassword");
+    const video = document.getElementById("bg-video");
 
+    // Force Play Logic for Low Power Mode
+    function forcePlayVideo() {
+        if (video.paused) {
+            video.play().catch(err => console.log("User interaction needed"));
+        }
+    }
+
+    // Attempt play on load
+    window.addEventListener('load', forcePlayVideo);
+
+    // Jumpstart video on first touch (Required for Low Power Mode)
+    document.body.addEventListener('touchstart', forcePlayVideo, { once: true });
+    document.body.addEventListener('click', forcePlayVideo, { once: true });
+
+    // Password Toggle
     toggle.addEventListener("click", () => {
         const isPassword = input.type === "password";
         input.type = isPassword ? "text" : "password";
