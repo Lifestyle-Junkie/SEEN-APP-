@@ -23,6 +23,7 @@
       height: 100%;
       margin: 0;
       padding: 0;
+      overflow: hidden;
     }
     body {
       background: var(--mythic-gradient);
@@ -31,7 +32,6 @@
       font-family: 'Open Sans', sans-serif;
       font-size: 12px;
       line-height: 1.3;
-      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -79,7 +79,6 @@
       padding: 10px 10px 10px 80px;
     }
    
-    /* Back Button Styling */
     .back-btn {
       position: absolute;
       left: 15px;
@@ -141,7 +140,7 @@
       width: 100%;
       background-size: cover;
       background-position: center;
-      transition: height 0.3s ease;
+      transition: height 0.35s ease;
     }
     .messages .messages-content {
       position: absolute;
@@ -252,7 +251,7 @@
       background: rgba(0, 0, 0, 0.3);
       padding: 10px;
       position: relative;
-      transition: all 0.3s ease;
+      transition: bottom 0.35s ease;
     }
     .message-box .message-input {
       background: none;
@@ -424,43 +423,46 @@
       }, 1000 + (Math.random() * 20) * 100);
     }
 
-    // ── FIX: Message bar pushes up when keyboard opens ───────────────────────────────
-    const messageInput = document.querySelector('.message-input');
-    const messages = document.querySelector('.messages');
+    // ── FIX: Message bar stays down / messages area shrinks when keyboard opens ──
     const messageBox = document.querySelector('.message-box');
+    const messagesArea = document.querySelector('.messages');
+    const messageInput = document.querySelector('.message-input');
 
-    let originalMessagesHeight = null;
+    let originalMessagesFlex = messagesArea.style.flex || '1 1 auto';
 
-    function adjustLayoutForKeyboard() {
-      if (!originalMessagesHeight) {
-        originalMessagesHeight = messages.style.height || 'auto';
-      }
-
-      // Wait for keyboard animation (timing is important on iOS)
+    function adjustForKeyboard() {
+      // Delay to let keyboard animation finish (critical on iOS)
       setTimeout(() => {
         const keyboardHeight = window.innerHeight - (window.visualViewport?.height || window.innerHeight);
 
         if (keyboardHeight > 100) { // keyboard is open
-          messages.style.height = `calc(100% - ${keyboardHeight + messageBox.offsetHeight}px)`;
+          // Shrink messages area so input bar stays visible at bottom
+          messagesArea.style.flex = `0 0 calc(100vh - ${keyboardHeight + messageBox.offsetHeight}px)`;
           updateScrollbar();
-          // Scroll to bottom
-          $messages.mCustomScrollbar('scrollTo', 'bottom', { scrollInertia: 100 });
+          // Force scroll to bottom
+          $messages.mCustomScrollbar('scrollTo', 'bottom', { scrollInertia: 0 });
         } else {
-          messages.style.height = originalMessagesHeight;
+          // Restore normal layout when keyboard hides
+          messagesArea.style.flex = originalMessagesFlex;
           updateScrollbar();
         }
-      }, 150); // Slight delay for smooth keyboard animation
+      }, 120);
     }
 
-    // Trigger on focus/blur
-    messageInput.addEventListener('focus', adjustLayoutForKeyboard);
-    messageInput.addEventListener('blur', adjustLayoutForKeyboard);
+    // Trigger when input is focused / blurred
+    messageInput.addEventListener('focus', adjustForKeyboard);
+    messageInput.addEventListener('blur', adjustForKeyboard);
 
-    // Also handle resize (very important on iOS)
-    window.addEventListener('resize', adjustLayoutForKeyboard);
+    // Also listen to viewport changes (very important on mobile)
+    window.addEventListener('resize', adjustForKeyboard);
     if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', adjustLayoutForKeyboard);
+      window.visualViewport.addEventListener('resize', adjustForKeyboard);
     }
+
+    // Initial scroll to bottom on load
+    setTimeout(() => {
+      updateScrollbar();
+    }, 300);
   </script>
 </body>
 </html>
