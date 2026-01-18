@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap">
+  <style>
+    :root {
+      --bg: #000;
+      --clr-white: #fff;
+      --clr-black: #000101;
+      --mythic-gradient: linear-gradient(to right, #fff, #a78bfa, #c084fc);
+      --clr-purple: #7c3aed;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    @layer reset, base, frame, content, footer, utilities;
+    @layer reset {
+      *, *::before, *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+    }
+    @layer base {
+      * {
+        font-family: "Poppins", sans-serif;
+      }
+      body {
+        background-color: var(--bg);
+        min-height: 100dvh;
+        margin: 0;
+        overflow: hidden;
+      }
+    }
+    @layer frame {
+      .frame {
+        width: 100vw;
+        height: 100dvh;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+      }
+    }
+    @layer content {
+      .content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: clamp(16px, 5vw, 32px) clamp(12px, 4vw, 24px) clamp(100px, 25vh, 140px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .card {
+        width: clamp(280px, 92vw, 420px);
+        display: flex;
+        flex-direction: column;
+        border-radius: clamp(24px, 7vw, 40px);
+        background-color: rgba(0, 0, 0, 1);
+        padding: clamp(24px, 7vw, 40px);
+        box-shadow: 0px 0px clamp(24px, 7vw, 48px) rgba(0, 0, 0, 0.4);
+      }
+      .lists {
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: clamp(12px, 3.5vw, 18px);
+        font-size: clamp(14px, 4.2vw, 20px);
+        color: rgba(255, 255, 255, 1);
+        width: 100%;
+        padding: 0;
+        list-style: none;
+      }
+      .list {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        max-width: 320px;
+      }
+      .list svg {
+        height: clamp(20px, 5vw, 26px);
+        width: clamp(20px, 5vw, 26px);
+        flex-shrink: 0;
+      }
+      .list svg path {
+        fill: var(--clr-purple);
+      }
+      .list span {
+        margin-left: clamp(16px, 4.5vw, 22px);
+        white-space: nowrap;
+      }
+      .button-container {
+        display: flex;
+        justify-content: space-between;
+        gap: clamp(12px, 4vw, 20px);
+        margin-top: clamp(28px, 7vw, 40px);
+      }
+      .card button {
+        font-size: clamp(12px, 3.5vw, 16px);
+        color: #fafafa;
+        text-transform: uppercase;
+        padding: clamp(12px, 4vw, 18px);
+        border-radius: clamp(14px, 4vw, 20px);
+        border: 2px solid var(--clr-purple);
+        background: #000;
+        box-shadow: 4px 4px var(--clr-purple);
+        cursor: pointer;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        min-height: 64px;
+      }
+      .card button.seen-ultra {
+        border-color: #ec4899;
+        box-shadow: 4px 4px #06b6d4;
+      }
+      .card button .btn-price {
+        font-size: clamp(1.3em, 5vw, 1.5em);
+        font-weight: 700;
+      }
+      .image-container {
+        position: relative;
+        width: clamp(280px, 92vw, 420px);
+        height: clamp(140px, 40vw, 220px);
+        margin: clamp(48px, 12vh, 80px) 0 clamp(24px, 6vh, 40px);
+      }
+      .image-container img {
+        width: 100%;
+        height: 100%;
+        border-radius: clamp(28px, 8vw, 44px);
+        object-fit: cover;
+        opacity: 0.6;
+      }
+      .image-text {
+        position: absolute;
+        top: 50%;
+        left: 53%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 100%;
+      }
+      .image-text .seen {
+        font-size: clamp(48px, 14vw, 80px);
+        font-weight: 900;
+        letter-spacing: 0.15em;
+        background: var(--mythic-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        line-height: 0.95;
+      }
+      .image-text .subtitle {
+        color: #fff;
+        font-size: clamp(14px, 4vw, 20px);
+        font-weight: 400;
+        max-width: clamp(220px, 80vw, 380px);
+        line-height: 1.3;
+        margin: 0 auto;
+      }
+      .subscribe-cta {
+        width: clamp(280px, 92vw, 420px);
+        margin-top: clamp(24px, 6vw, 36px);
+      }
+      .subscribe-cta .button {
+        padding: clamp(16px, 5vw, 20px);
+        font-size: clamp(18px, 5vw, 24px);
+        color: #000;
+        background-color: #fff;
+        width: 100%;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        min-height: 64px;
+      }
+    }
+    @layer footer {
+      .nav-bar {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100vw;
+        height: clamp(68px, 18vw, 80px);
+        background: #000;
+        border-top: 1px solid #333;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 1000;
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+      .nav-bar .button-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        justify-items: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        padding: 0 clamp(8px, 3vw, 16px);
+      }
+      .nav-bar .nav-button {
+        background: none;
+        border: none;
+        color: var(--clr-white);
+        cursor: pointer;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        outline: none;
+      }
+      .nav-bar .icon {
+        width: clamp(28px, 7vw, 36px);
+        height: clamp(28px, 7vw, 36px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="frame">
+    <div class="content">
+      <div class="image-container">
+        <img src="subscription.png" alt="Subscription">
+        <div class="image-text">
+          <div class="seen">SEEN</div>
+          <div class="subtitle">Introducing Seen Plus: go further on the app</div>
+        </div>
+      </div>
+      <div class="card">
+        <ul class="lists" id="plus-features">
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>Unlimited Likes</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>See Who Likes You</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>Read Message Receipts</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>Daily Super Likes</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>Ad-Free Experience</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>Rewind Last Swipe</span>
+          </li>
+        </ul>
+        <ul class="lists" id="ultra-features" style="display: none;">
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>5× Profile Boosts Daily</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>Profile Priority in Discovery</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>See Who Likes You First</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>Message Before Matching</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>Spotlight (Weekly)</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>Super Boost (Monthly)</span>
+          </li>
+        </ul>
+        <div class="button-container">
+          <button id="plus-btn">
+            <span class="btn-title">SEEN PLUS</span>
+            <span class="btn-price">$5/mo</span>
+          </button>
+          <button class="seen-ultra" id="ultra-btn">
+            <span class="btn-title">SEEN ULTRA</span>
+            <span class="btn-price">$20/mo</span>
+          </button>
+        </div>
+      </div>
+      <div class="subscribe-cta">
+        <button class="button" id="subscribe-btn">GET SEEN PLUS</button>
+      </div>
+    </div>
+
+    <div class="nav-bar">
+      <div class="button-container">
+        <!-- Home icon → discover.html -->
+        <button class="nav-button" onclick="window.location.href='discover.html'">
+          <svg viewBox="0 0 1024 1024" fill="currentColor" class="icon"><path d="M946.5 505L560.1 118.8l-25.9-25.9a31.5 31.5 0 0 0-44.4 0L77.5 505a63.9 63.9 0 0 0-18.8 46c.4 35.2 29.7 63.3 64.9 63.3h42.5V940h691.8V614.3h43.4c17.1 0 33.2-6.7 45.3-18.8a63.6 63.6 0 0 0 18.7-45.3c0-17-6.7-33.1-18.8-45.2zM568 868H456V664h112v204zm217.9-325.7V868H632V640c0-22.1-17.9-40-40-40H432c-22.1 0-40 17.9-40 40v228H238.1V542.3h-96l370-369.7 23.1 23.1L882 542.3h-96.1z"></path></svg>
+        </button>
+
+        <!-- Search icon → Explore.html -->
+        <button class="nav-button" onclick="window.location.href='Explore.html'">
+          <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor" class="icon"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </button>
+
+        <!-- Profile icon → profile.html -->
+        <button class="nav-button" onclick="window.location.href='profile.html'">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="icon"><path d="M12 2.5a5.5 5.5 0 0 1 3.096 10.047 9.005 9.005 0 0 1 5.9 8.181.75.75 0 1 1-1.499.044 7.5 7.5 0 0 0-14.993 0 .75.75 0 1 1-1.5-.045 9.005 9.005 0 0 1 5.9-8.18A5.5 5.5 0 0 1 12 2.5ZM8 8a4 4 0 1 0 8 0 4 4 0 1 0-8 0Z"></path></svg>
+        </button>
+
+        <!-- Store icon → Store.html -->
+        <button class="nav-button" onclick="window.location.href='Store.html'">
+          <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor" class="icon"><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle></svg>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const plusFeatures = document.getElementById('plus-features');
+    const ultraFeatures = document.getElementById('ultra-features');
+    const plusBtn = document.getElementById('plus-btn');
+    const ultraBtn = document.getElementById('ultra-btn');
+    const subscribeBtn = document.getElementById('subscribe-btn');
+
+    function showPlus() {
+      plusFeatures.style.display = 'flex';
+      ultraFeatures.style.display = 'none';
+      subscribeBtn.textContent = 'GET SEEN PLUS';
+      plusBtn.style.background = 'linear-gradient(145deg, rgba(124,58,237,0.12), rgba(124,58,237,0.04))';
+      ultraBtn.style.background = '#000';
+    }
+
+    function showUltra() {
+      plusFeatures.style.display = 'none';
+      ultraFeatures.style.display = 'flex';
+      subscribeBtn.textContent = 'GET SEEN ULTRA';
+      ultraBtn.style.background = 'linear-gradient(145deg, rgba(236,72,153,0.18), rgba(6,182,212,0.12))';
+      plusBtn.style.background = '#000';
+    }
+
+    plusBtn.addEventListener('click', showPlus);
+    ultraBtn.addEventListener('click', showUltra);
+    showPlus();
+  </script>
+</body>
+</html>
