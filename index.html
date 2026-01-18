@@ -2,377 +2,362 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap&font-display=swap">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Seen Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Poppins:wght@900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #000;
-      --clr-white: #fff;
-      --clr-black: #000101;
-      --mythic-gradient: linear-gradient(135deg, #7c3aed, #ec4899, #06b6d4, #7c3aed);
-      --clr-purple: #7c3aed;
+      --mythic-gradient: linear-gradient(to right, #fff, #a78bfa, #c084fc);
+      --primary-purple: #7c3aed;
     }
-    html, body {
+
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+    body {
+      background-color: #0f0f0f;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+
+    .carousel-container {
+      position: relative;
+      width: 90%;
+      max-width: 350px;
+      height: 690px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0 10px;
+    }
+    .carousel {
+      position: relative;
       width: 100%;
       height: 100%;
-      overflow: hidden;
-      background-color: var(--bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    @layer reset, base, frame, content, footer, utilities;
-    @layer reset {
-      *, *::before, *::after {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 640px;
+      border-radius: 20px;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.5s ease, filter 0.5s ease, opacity 0.5s ease;
+      padding: 2px;
+      z-index: 5;
     }
-    @layer base {
-      * {
-        font-family: "Poppins", sans-serif;
-      }
-      body {
-        min-height: 100dvh;
-        overflow: hidden;
-      }
+    .slide.active {
+      transform: scale(1.2) translateX(0);
+      filter: none;
+      opacity: 1;
+      z-index: 15;
     }
-    @layer frame {
-      .frame {
-        width: 100vw;
-        height: 100dvh;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-      }
+    .slide.left {
+      transform: scale(0.9) translateX(-180px);
+      filter: grayscale(80%) blur(2px);
+      opacity: 0.8;
+      z-index: 10;
     }
-    @layer content {
-      .content {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        padding: clamp(16px, 5vw, 32px) clamp(12px, 4vw, 24px) clamp(100px, 25vh, 140px);
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-      }
-      
-      /* IMAGE FADE EFFECT STARTS HERE */
-      .image-container {
-        position: relative;
-        width: clamp(280px, 92vw, 420px);
-        height: clamp(180px, 45vw, 260px);
-        margin: clamp(48px, 12vh, 80px) 0 clamp(24px, 6vh, 40px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+    .slide.right {
+      transform: scale(0.9) translateX(180px);
+      filter: grayscale(80%) blur(2px);
+      opacity: 0.8;
+      z-index: 10;
+    }
+    .slide.far {
+      transform: scale(0.7) translateX(-240px);
+      filter: grayscale(100%) blur(4px);
+      opacity: 0.6;
+      z-index: 5;
+    }
+    .slide.far.right {
+      transform: scale(0.7) translateX(240px);
+    }
 
-      .image-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 0.7;
-        /* This creates the fade-to-black edge effect */
-        -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 80%);
-        mask-image: radial-gradient(circle, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 80%);
-      }
-
-      /* Optional: Adds a soft glow behind the image for depth */
-      .image-container::before {
-        content: '';
-        position: absolute;
-        width: 60%;
-        height: 60%;
-        background: var(--clr-purple);
-        filter: blur(80px);
-        opacity: 0.3;
-        z-index: -1;
-      }
-      /* IMAGE FADE EFFECT ENDS HERE */
-
-      .image-text {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        width: 100%;
-        z-index: 2;
-      }
-      .image-text .seen {
-        font-size: clamp(40px, 12vw, 64px);
-        font-weight: 800;
-        background: var(--mythic-gradient);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        letter-spacing: 2px;
-      }
-      .image-text .subtitle {
-        color: #fff;
-        font-size: clamp(14px, 4vw, 20px);
-        font-weight: 400;
-        max-width: clamp(220px, 80vw, 380px);
-        line-height: 1.3;
-        margin: 0 auto;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-      }
-      
-      .card {
-        width: clamp(280px, 92vw, 420px);
-        display: flex;
-        flex-direction: column;
-        border-radius: clamp(24px, 7vw, 40px);
-        background-color: rgba(0, 0, 0, 1);
-        padding: clamp(24px, 7vw, 40px);
-        box-shadow: 0px 0px clamp(24px, 7vw, 48px) rgba(0, 0, 0, 0.4);
-      }
-      .lists {
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        row-gap: clamp(12px, 3.5vw, 18px);
-        font-size: clamp(14px, 4.2vw, 20px);
-        color: rgba(255, 255, 255, 1);
-        width: 100%;
-        padding: 0;
-        list-style: none;
-      }
-      .list {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        width: 100%;
-        max-width: 320px;
-      }
-      .list svg {
-        height: clamp(20px, 5vw, 26px);
-        width: clamp(20px, 5vw, 26px);
-        flex-shrink: 0;
-      }
-      .list svg path {
-        fill: var(--clr-purple);
-      }
-      .list span {
-        margin-left: clamp(16px, 4.5vw, 22px);
-        white-space: nowrap;
-      }
-      .button-container {
-        display: flex;
-        justify-content: space-between;
-        gap: clamp(12px, 4vw, 20px);
-        margin-top: clamp(28px, 7vw, 40px);
-      }
-      .card button {
-        font-size: clamp(12px, 3.5vw, 16px);
-        color: #fafafa;
-        text-transform: uppercase;
-        padding: clamp(12px, 4vw, 18px);
-        border-radius: clamp(14px, 4vw, 20px);
-        border: 2px solid var(--clr-purple);
-        background: #000;
-        box-shadow: 4px 4px var(--clr-purple);
-        cursor: pointer;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        min-height: 64px;
-      }
-      .card button.seen-ultra {
-        border-color: #ec4899;
-        box-shadow: 4px 4px #06b6d4;
-      }
-      .card button .btn-price {
-        font-size: clamp(1.3em, 5vw, 1.5em);
-        font-weight: 700;
-      }
-      .subscribe-cta {
-        width: clamp(280px, 92vw, 420px);
-        margin-top: clamp(24px, 6vw, 36px);
-      }
-      .subscribe-cta .button {
-        padding: clamp(16px, 5vw, 20px);
-        font-size: clamp(18px, 5vw, 24px);
-        color: #000;
-        background-color: #fff;
-        width: 100%;
-        border: none;
-        border-radius: 50px;
-        font-weight: 600;
-        cursor: pointer;
-        min-height: 64px;
-      }
+    /* SEEN logo – exact match from discover.html */
+    .logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 900;
+      font-size: clamp(48px, 14vw, 80px);
+      letter-spacing: 6px;
+      background: var(--mythic-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+      text-align: center;
+      z-index: 2;
+      pointer-events: none;
+      line-height: 1;
     }
-    @layer footer {
-      .nav-bar {
-        position: fixed;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100vw;
-        height: clamp(68px, 18vw, 80px);
-        background: #000;
-        border-top: 1px solid #333;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        z-index: 1000;
-        padding-bottom: env(safe-area-inset-bottom);
-      }
-      .nav-bar .button-container {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        justify-items: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        padding: 0 clamp(8px, 3vw, 16px);
-      }
-      .nav-bar .nav-button {
-        background: none;
-        border: none;
-        color: var(--clr-white);
-        cursor: pointer;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        outline: none;
-      }
-      .nav-bar .icon {
-        width: clamp(28px, 7vw, 36px);
-        height: clamp(28px, 7vw, 36px);
-      }
+
+    .tagline {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #ccc;
+      font-size: 0.8rem;
+      font-family: 'Montserrat', 'Segoe UI', sans-serif;
+      text-align: center;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .login-form {
+      width: 90%;
+      max-width: 350px;
+      margin-top: 20px;
+    }
+    .form-control {
+      position: relative;
+      margin: 10px 0 20px;
+      width: 100%;
+    }
+    .form-control input {
+      background-color: transparent;
+      border: 0;
+      border-bottom: 2px #fff solid;
+      display: block;
+      width: 100%;
+      padding: 8px 0;
+      font-size: 14px;
+      color: #fff;
+    }
+    .form-control input:focus,
+    .form-control input:valid {
+      outline: 0;
+      border-bottom-color: var(--primary-purple);
+    }
+    .form-control label {
+      position: absolute;
+      top: 8px;
+      left: 0;
+      pointer-events: none;
+    }
+    .form-control label span {
+      display: inline-block;
+      font-size: 14px;
+      min-width: 5px;
+      color: #fff;
+      transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    .form-control input:focus + label span,
+    .form-control input:valid + label span {
+      color: var(--primary-purple);
+      transform: translateY(-20px);
+    }
+    .login-form .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .btn {
+      border: none;
+      width: 7em;
+      height: 2.5em;
+      border-radius: 3em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      background: #1C1A1C;
+      cursor: pointer;
+      transition: all 450ms ease-in-out;
+      background: var(--mythic-gradient);
+      background-size: 200% 200%;
+      animation: gradientMove 8s ease infinite;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .sparkle {
+      fill: #ffffff;
+      transition: all 800ms ease;
+    }
+    .text {
+      font-weight: 600;
+      color: #ffffff;
+      font-size: x-small;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(124, 58, 237, 0.5);
+    }
+    .forgot {
+      font-size: 0.7rem;
+      color: #888;
+      text-align: right;
+      margin-bottom: 5px;
+    }
+
+    /* Guest button */
+    .guest-btn {
+      background: transparent;
+      border: 1px solid var(--primary-purple);
+      color: var(--primary-purple);
+      padding: 0.9rem 2rem;
+      border-radius: 2rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1.5rem;
+      width: 100%;
+      max-width: 300px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .guest-btn:hover {
+      background: rgba(124, 58, 237, 0.15);
+      border-color: #ec4899;
+      color: #fff;
+      box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+    }
+
+    @media (max-width: 600px) {
+      .carousel-container { height: 530px; }
+      .slide { height: 480px; padding: 2px; }
+      .slide.active { transform: scale(1.1) translateX(0); }
+      .slide.left { transform: scale(0.8) translateX(-130px); }
+      .slide.right { transform: scale(0.8) translateX(130px); }
+      .slide.far { transform: scale(0.6) translateX(-160px); }
+      .slide.far.right { transform: scale(0.6) translateX(160px); }
     }
   </style>
 </head>
 <body>
-  <main class="frame">
-    <div class="content">
-      <div class="image-container">
-        <img src="subscription.png" alt="Subscription">
-        <div class="image-text">
-          <div class="seen">SEEN</div>
-          <div class="subtitle">Introducing Seen Plus: go further on the app</div>
-        </div>
-      </div>
-      <div class="card">
-        <ul class="lists" id="plus-features">
-          <li class="list">
-            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
-            <span>Unlimited Likes</span>
-          </li>
-          <li class="list">
-            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
-            <span>See Who Likes You</span>
-          </li>
-          <li class="list">
-            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
-            <span>Read Message Receipts</span>
-          </li>
-          <li class="list">
-            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
-            <span>Daily Super Likes</span>
-          </li>
-          <li class="list">
-            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
-            <span>Ad-Free Experience</span>
-          </li>
-          <li class="list">
-            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
-            <span>Rewind Last Swipe</span>
-          </li>
-        </ul>
-        <ul class="lists" id="ultra-features" style="display: none;">
-          <li class="list">
-            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
-            <span>5× Profile Boosts Daily</span>
-          </li>
-          <li class="list">
-            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
-            <span>Profile Priority in Discovery</span>
-          </li>
-          <li class="list">
-            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
-            <span>See Who Likes You First</span>
-          </li>
-          <li class="list">
-            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
-            <span>Message Before Matching</span>
-          </li>
-          <li class="list">
-            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
-            <span>Spotlight (Weekly)</span>
-          </li>
-          <li class="list">
-            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
-            <span>Super Boost (Monthly)</span>
-          </li>
-        </ul>
-        <div class="button-container">
-          <button id="plus-btn">
-            <span class="btn-title">SEEN PLUS</span>
-            <span class="btn-price">$5/mo</span>
-          </button>
-          <button class="seen-ultra" id="ultra-btn">
-            <span class="btn-title">SEEN ULTRA</span>
-            <span class="btn-price">$20/mo</span>
-          </button>
-        </div>
-      </div>
-      <div class="subscribe-cta">
-        <button class="button" id="subscribe-btn">GET SEEN PLUS</button>
-      </div>
+  <div class="carousel-container">
+    <div class="carousel">
+      <!-- Slides will be injected here -->
     </div>
-    <div class="nav-bar">
-      <div class="button-container">
-        <button class="nav-button" onclick="window.location.href='discover.html'">
-          <svg viewBox="0 0 1024 1024" fill="currentColor" class="icon"><path d="M946.5 505L560.1 118.8l-25.9-25.9a31.5 31.5 0 0 0-44.4 0L77.5 505a63.9 63.9 0 0 0-18.8 46c.4 35.2 29.7 63.3 64.9 63.3h42.5V940h691.8V614.3h43.4c17.1 0 33.2-6.7 45.3-18.8a63.6 63.6 0 0 0 18.7-45.3c0-17-6.7-33.1-18.8-45.2zM568 868H456V664h112v204zm217.9-325.7V868H632V640c0-22.1-17.9-40-40-40H432c-22.1 0-40 17.9-40 40v228H238.1V542.3h-96l370-369.7 23.1 23.1L882 542.3h-96.1z"></path></svg>
-        </button>
-        <button class="nav-button" onclick="window.location.href='Explore.html'">
-          <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor" class="icon"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-        </button>
-        <button class="nav-button" onclick="window.location.href='profile.html'">
-          <svg viewBox="0 0 24 24" fill="currentColor" class="icon"><path d="M12 2.5a5.5 5.5 0 0 1 3.096 10.047 9.005 9.005 0 0 1 5.9 8.181.75.75 0 1 1-1.499.044 7.5 7.5 0 0 0-14.993 0 .75.75 0 1 1-1.5-.045 9.005 9.005 0 0 1 5.9-8.18A5.5 5.5 0 0 1 12 2.5ZM8 8a4 4 0 1 0 8 0 4 4 0 1 0-8 0Z"></path></svg>
-        </button>
-        <button class="nav-button" onclick="window.location.href='Store.html'">
-          <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor" class="icon"><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle></svg>
-        </button>
-      </div>
+  </div>
+
+  <form class="login-form">
+    <div class="form-control">
+      <input required type="text">
+      <label>
+        <span style="transition-delay:350ms">U</span>
+        <span style="transition-delay:300ms">s</span>
+        <span style="transition-delay:250ms">e</span>
+        <span style="transition-delay:200ms">r</span>
+        <span style="transition-delay:150ms">n</span>
+        <span style="transition-delay:100ms">a</span>
+        <span style="transition-delay:50ms">m</span>
+        <span style="transition-delay:0ms">e</span>
+      </label>
     </div>
-  </main>
+    <div class="form-control">
+      <input required type="password">
+      <label>
+        <span style="transition-delay:350ms">P</span>
+        <span style="transition-delay:300ms">a</span>
+        <span style="transition-delay:250ms">s</span>
+        <span style="transition-delay:200ms">s</span>
+        <span style="transition-delay:150ms">w</span>
+        <span style="transition-delay:100ms">o</span>
+        <span style="transition-delay:50ms">r</span>
+        <span style="transition-delay:0ms">d</span>
+      </label>
+    </div>
+    <div class="forgot">Forgot password?</div>
+
+    <div class="actions">
+      <button type="submit" class="btn">
+        <svg height="16" width="16" fill="#FFFFFF" viewBox="0 0 24 24" class="sparkle">
+          <path d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245Z"/>
+        </svg>
+        <span class="text">LOGIN</span>
+      </button>
+      <button type="button" class="btn">
+        <svg height="16" width="16" fill="#FFFFFF" viewBox="0 0 24 24" class="sparkle">
+          <path d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245Z"/>
+        </svg>
+        <span class="text">REGISTER</span>
+      </button>
+    </div>
+
+    <!-- Continue as Guest -->
+    <button type="button" class="guest-btn" onclick="window.location.href='discover.html'">
+      Continue as Guest
+    </button>
+  </form>
+
   <script>
-    const plusFeatures = document.getElementById('plus-features');
-    const ultraFeatures = document.getElementById('ultra-features');
-    const plusBtn = document.getElementById('plus-btn');
-    const ultraBtn = document.getElementById('ultra-btn');
-    const subscribeBtn = document.getElementById('subscribe-btn');
-    function showPlus() {
-      plusFeatures.style.display = 'flex';
-      ultraFeatures.style.display = 'none';
-      subscribeBtn.textContent = 'GET SEEN PLUS';
-      plusBtn.style.background = 'linear-gradient(145deg, rgba(124,58,237,0.12), rgba(124,58,237,0.04))';
-      ultraBtn.style.background = '#000';
+    const slidesData = [
+      { image: 'gamergirl.png', label: 'Gamer Girl', logo: 'seen', tagline: 'Find gothically inclined people near you.' },
+      { image: 'Girlwithhat.png', label: 'Girl with Hat', logo: 'seen', tagline: 'Discover real energy. Real people.' },
+      { image: 'Lightskin.png', label: 'Lightskin', logo: 'seen', tagline: 'She’s waiting. Will you swipe?' }
+    ];
+
+    const carousel = document.querySelector('.carousel');
+    let currentIndex = 0;
+
+    function createSlides() {
+      carousel.innerHTML = '';
+      slidesData.forEach((slide, index) => {
+        const slideElement = document.createElement('div');
+        slideElement.classList.add('slide');
+        slideElement.style.backgroundImage = `url(${slide.image})`;
+        slideElement.dataset.index = index;
+
+        const logoElement = document.createElement('div');
+        logoElement.classList.add('logo');
+        logoElement.textContent = slide.logo.toUpperCase();
+
+        const taglineElement = document.createElement('div');
+        taglineElement.classList.add('tagline');
+        taglineElement.textContent = slide.tagline;
+
+        slideElement.appendChild(logoElement);
+        slideElement.appendChild(taglineElement);
+        carousel.appendChild(slideElement);
+      });
+      updateCarousel();
     }
-    function showUltra() {
-      plusFeatures.style.display = 'none';
-      ultraFeatures.style.display = 'flex';
-      subscribeBtn.textContent = 'GET SEEN ULTRA';
-      ultraBtn.style.background = 'linear-gradient(145deg, rgba(236,72,153,0.18), rgba(6,182,212,0.12))';
-      plusBtn.style.background = '#000';
+
+    function updateCarousel() {
+      const slides = document.querySelectorAll('.slide');
+      slides.forEach((slide, index) => {
+        const offset = ((index - currentIndex + slidesData.length) % slidesData.length);
+        slide.className = 'slide';
+        if (offset === 0) {
+          slide.classList.add('active');
+        } else if (offset === 1 || offset === slidesData.length - 1) {
+          slide.classList.add(offset === 1 ? 'right' : 'left');
+        } else {
+          slide.classList.add('far');
+          slide.classList.add(offset < slidesData.length / 2 ? 'left' : 'right');
+        }
+      });
     }
-    plusBtn.addEventListener('click', showPlus);
-    ultraBtn.addEventListener('click', showUltra);
-    showPlus();
+
+    function moveCarousel(direction) {
+      currentIndex = (currentIndex + direction + slidesData.length) % slidesData.length;
+      updateCarousel();
+    }
+
+    setInterval(() => {
+      moveCarousel(1);
+    }, 4000);
+
+    createSlides();
   </script>
 </body>
 </html>
