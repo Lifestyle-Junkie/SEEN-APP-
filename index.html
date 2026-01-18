@@ -2,297 +2,364 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
-  <title>SEEN</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap&font-display=swap">
   <style>
     :root {
       --bg: #000;
       --clr-white: #fff;
-      --clr-red: #ff5168;
-      --clr-green: #63ff68;
+      --clr-black: #000101;
+      --mythic-gradient: linear-gradient(135deg, #7c3aed, #ec4899, #06b6d4, #7c3aed);
+      --clr-purple: #7c3aed;
     }
-    body {
+    html, body {
       margin: 0;
       padding: 0;
-      background: var(--bg);
-      color: white;
-      font-family: 'Poppins', sans-serif;
-      height: 100dvh;
-      overflow: hidden;
-    }
-    .app-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      z-index: 2000;
-      padding-top: env(safe-area-inset-top);
-    }
-    .logo-text {
-      font-weight: 900;
-      font-size: 1.8rem;
-      letter-spacing: 6px;
-      background: linear-gradient(to right, #fff, #a78bfa, #c084fc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .top-icon-btn {
-      width: 44px;
-      height: 44px;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    .animate-mythic { animation: spin 6s linear infinite; }
-    #card-container {
-      position: absolute;
-      top: 110px;
-      bottom: 85px; 
-      left: 12px;
-      right: 12px;
-      max-width: 420px;
-      margin: 0 auto;
-    }
-    article {
       width: 100%;
       height: 100%;
-      position: relative;
-      transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      overflow: hidden;
     }
-    .gone-left { transform: translateX(-140%) rotate(-35deg) !important; opacity: 0; }
-    .gone-right { transform: translateX(140%) rotate(35deg) !important; opacity: 0; }
-    .nav-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 75px;
-      background: var(--bg);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      border-top: 1px solid #333;
-      z-index: 1000;
-      padding-bottom: env(safe-area-inset-bottom);
+    @layer reset, base, frame, content, footer, utilities;
+    @layer reset {
+      *, *::before, *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
     }
-    .button-container {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      width: 100%;
-      justify-items: center;
+    @layer base {
+      * {
+        font-family: "Poppins", sans-serif;
+      }
+      body {
+        background-color: var(--bg);
+        min-height: 100dvh;
+        margin: 0;
+        overflow: hidden;
+      }
     }
-    .button .icon { width: 26px; height: 26px; color: white; }
-    .choice-btn {
-      position: absolute;
-      top: 40%;
-      transform: translateY(-50%);
-      font-size: 3.5rem;
-      font-weight: 900;
-      opacity: 0;
-      pointer-events: none;
-      z-index: 50;
+    @layer frame {
+      .frame {
+        width: 100vw;
+        height: 100dvh;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+      }
     }
-    .nope { left: 20px; color: var(--clr-red); transform: rotate(-15deg); }
-    .like { right: 20px; color: var(--clr-green); transform: rotate(15deg); }
-    #video-overlay {
-      position: absolute;
-      inset: 0;
-      display: none;
-      place-items: center;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(4px);
-      z-index: 30;
+    @layer content {
+      .content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: clamp(16px, 5vw, 32px) clamp(12px, 4vw, 24px) clamp(100px, 25vh, 140px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .card {
+        width: clamp(280px, 92vw, 420px);
+        display: flex;
+        flex-direction: column;
+        border-radius: clamp(24px, 7vw, 40px);
+        background-color: rgba(0, 0, 0, 1);
+        padding: clamp(24px, 7vw, 40px);
+        box-shadow: 0px 0px clamp(24px, 7vw, 48px) rgba(0, 0, 0, 0.4);
+      }
+      .lists {
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: clamp(12px, 3.5vw, 18px);
+        font-size: clamp(14px, 4.2vw, 20px);
+        color: rgba(255, 255, 255, 1);
+        width: 100%;
+        padding: 0;
+        list-style: none;
+      }
+      .list {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        max-width: 320px;
+      }
+      .list svg {
+        height: clamp(20px, 5vw, 26px);
+        width: clamp(20px, 5vw, 26px);
+        flex-shrink: 0;
+      }
+      .list svg path {
+        fill: var(--clr-purple);
+      }
+      .list span {
+        margin-left: clamp(16px, 4.5vw, 22px);
+        white-space: nowrap;
+      }
+      .button-container {
+        display: flex;
+        justify-content: space-between;
+        gap: clamp(12px, 4vw, 20px);
+        margin-top: clamp(28px, 7vw, 40px);
+      }
+      .card button {
+        font-size: clamp(12px, 3.5vw, 16px);
+        color: #fafafa;
+        text-transform: uppercase;
+        padding: clamp(12px, 4vw, 18px);
+        border-radius: clamp(14px, 4vw, 20px);
+        border: 2px solid var(--clr-purple);
+        background: #000;
+        box-shadow: 4px 4px var(--clr-purple);
+        cursor: pointer;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        min-height: 64px;
+      }
+      .card button.seen-ultra {
+        border-color: #ec4899;
+        box-shadow: 4px 4px #06b6d4;
+      }
+      .card button .btn-price {
+        font-size: clamp(1.3em, 5vw, 1.5em);
+        font-weight: 700;
+      }
+      .image-container {
+        position: relative;
+        width: clamp(280px, 92vw, 420px);
+        height: clamp(140px, 40vw, 220px);
+        margin: clamp(48px, 12vh, 80px) 0 clamp(24px, 6vh, 40px);
+      }
+      .image-container img {
+        width: 100%;
+        height: 100%;
+        border-radius: clamp(28px, 8vw, 44px);
+        object-fit: cover;
+        opacity: 0.6;
+      }
+      .image-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 100%;
+      }
+      .image-text .seen {
+        font-size: clamp(40px, 12vw, 64px);
+        font-weight: 800;
+        background: var(--mythic-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .image-text .subtitle {
+        color: #fff;
+        font-size: clamp(14px, 4vw, 20px);
+        font-weight: 400;
+        max-width: clamp(220px, 80vw, 380px);
+        line-height: 1.3;
+        margin: 0 auto;
+      }
+      .subscribe-cta {
+        width: clamp(280px, 92vw, 420px);
+        margin-top: clamp(24px, 6vw, 36px);
+      }
+      .subscribe-cta .button {
+        padding: clamp(16px, 5vw, 20px);
+        font-size: clamp(18px, 5vw, 24px);
+        color: #000;
+        background-color: #fff;
+        width: 100%;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        min-height: 64px;
+      }
     }
-
-    /* Floating Review Bubbles */
-    .review-bubble {
-      position: absolute;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 6px 10px;
-      border-radius: 16px;
-      font-size: 10px;
-      font-weight: 600;
-      color: white;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-      animation: popScale 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-      z-index: 45;
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .review-bubble img { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; border: 1px solid #a78bfa; }
-    @keyframes popScale {
-      from { opacity: 0; transform: scale(0.5) translateY(10px); }
-      to { opacity: 1; transform: scale(1) translateY(0); }
+    @layer footer {
+      .nav-bar {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100vw;
+        height: clamp(68px, 18vw, 80px);
+        background: #000;
+        border-top: 1px solid #333;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 1000;
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+      .nav-bar .button-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        justify-items: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        padding: 0 clamp(8px, 3vw, 16px);
+      }
+      .nav-bar .nav-button {
+        background: none;
+        border: none;
+        color: var(--clr-white);
+        cursor: pointer;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        outline: none;
+      }
+      .nav-bar .icon {
+        width: clamp(28px, 7vw, 36px);
+        height: clamp(28px, 7vw, 36px);
+      }
     }
   </style>
 </head>
 <body>
-<header class="app-header">
-  <button class="top-icon-btn">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-  </button>
-  <span class="logo-text">SEEN</span>
-  <button class="top-icon-btn">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-  </button>
-</header>
-<div id="card-container">
-  <article id="main-card" class="rounded-3xl overflow-hidden shadow-2xl relative">
-    <div class="absolute inset-0 animate-mythic p-[2px] bg-[conic-gradient(from_0deg,#7c3aed,#ec4899,#06b6d4,#7c3aed)]">
-      <div class="w-full h-full bg-black rounded-3xl"></div>
-    </div>
-    <div class="absolute inset-[2px] bg-gradient-to-b from-gray-950 to-black rounded-3xl flex flex-col overflow-hidden">
-      <button id="btn-back" class="absolute top-4 left-4 z-50 bg-black/50 p-2 rounded-full hidden">← Back</button>
-      
-      <div class="relative h-[55%]">
-        <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=500" class="w-full h-full object-cover" alt="profile" />
-        
-        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-
-        <div id="review-bubbles" class="absolute inset-0 hidden pointer-events-none">
-          <div class="review-bubble" style="top: 15%; left: 8%;">
-            <img src="https://i.pravatar.cc/100?u=1" alt=""> "Incredible listener!" ⭐
-          </div>
-          <div class="review-bubble" style="top: 40%; right: 8%;">
-            <img src="https://i.pravatar.cc/100?u=2" alt=""> "Great energy!" ⭐
-          </div>
-          <div class="review-bubble" style="bottom: 15%; left: 15%;">
-            <img src="https://i.pravatar.cc/100?u=3" alt=""> "Highly recommend" ⭐
-          </div>
-        </div>
-
-        <div id="video-overlay" class="hidden">
-          <div class="w-40 h-40 rounded-full border-4 border-purple-500 shadow-2xl overflow-hidden relative">
-            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=500" class="w-full h-full object-cover" alt="">
-            <div class="absolute inset-0 bg-purple-600/30 flex items-center justify-center">
-              <div class="w-0 h-0 border-l-[48px] border-l-white border-y-[30px] border-y-transparent ml-3"></div>
-            </div>
-          </div>
+  <main class="frame">
+    <div class="content">
+      <div class="image-container">
+        <img src="subscription.png" alt="Subscription">
+        <div class="image-text">
+          <div class="seen">SEEN</div>
+          <div class="subtitle">Introducing Seen Plus: go further on the app</div>
         </div>
       </div>
 
-      <div class="flex-1 p-5 flex flex-col z-10">
-        <div class="flex justify-between items-center mb-3">
-          <h2 class="text-2xl font-black">Jefferson, 25</h2>
-          <div class="bg-purple-700 px-3 py-1 rounded-lg font-black text-xs">4.9</div>
-        </div>
-        <div class="flex-1 bg-white/5 rounded-2xl p-4 border border-white/10 overflow-hidden">
-          <div id="bio-content" class="text-sm text-gray-300 italic h-full overflow-y-auto">
-            Journalist by day, mythic explorer by night. Looking for someone to share coffee and headlines with.
-          </div>
-          <div id="reviews-content" class="hidden text-sm text-gray-300 space-y-4 h-full overflow-y-auto pr-2">
-            <div class="pb-2 border-b border-white/5">"Incredible listener!" <span class="block text-[10px] text-purple-400">- Sarah ★★★★★</span></div>
-            <div class="pb-2 border-b border-white/5">"Great energy and vibe. Really enjoyed our conversation." <span class="block text-[10px] text-purple-400">- Mike ★★★★☆</span></div>
-            <div class="pb-2 border-b border-white/5">"Highly recommend. Very professional and kind." <span class="block text-[10px] text-purple-400">- Leo ★★★★★</span></div>
-            <div class="pb-2 border-b border-white/5">"Prompt and engaging. 10/10!" <span class="block text-[10px] text-purple-400">- Jess ★★★★★</span></div>
-            <div class="pb-2">"Wait till you hear his stories!" <span class="block text-[10px] text-purple-400">- David ★★★★★</span></div>
-          </div>
-        </div>
-        <div class="flex justify-between mt-4 text-[10px] font-black uppercase tracking-widest text-purple-400">
-          <button id="btn-video" class="hover:text-white underline underline-offset-4">Watch Video</button>
-          <button id="btn-reviews" class="hover:text-white underline underline-offset-4">Reviews (12)</button>
+      <div class="card">
+        <!-- Full PLUS features list - fully restored -->
+        <ul class="lists" id="plus-features">
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>Unlimited Likes</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>See Who Likes You</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>Read Message Receipts</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>Daily Super Likes</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>Ad-Free Experience</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>Rewind Last Swipe</span>
+          </li>
+        </ul>
+
+        <!-- ULTRA features -->
+        <ul class="lists" id="ultra-features" style="display: none;">
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>5× Profile Boosts Daily</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>Profile Priority in Discovery</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>See Who Likes You First</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>Message Before Matching</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>Spotlight (Weekly)</span>
+          </li>
+          <li class="list">
+            <svg viewBox="0 0 24 24"><path d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path></svg>
+            <span>Super Boost (Monthly)</span>
+          </li>
+        </ul>
+
+        <div class="button-container">
+          <button id="plus-btn">
+            <span class="btn-title">SEEN PLUS</span>
+            <span class="btn-price">$5/mo</span>
+          </button>
+          <button class="seen-ultra" id="ultra-btn">
+            <span class="btn-title">SEEN ULTRA</span>
+            <span class="btn-price">$20/mo</span>
+          </button>
         </div>
       </div>
+
+      <div class="subscribe-cta">
+        <button class="button" id="subscribe-btn">GET SEEN PLUS</button>
+      </div>
     </div>
-    <div class="choice-btn nope">NOPE</div>
-    <div class="choice-btn like">LIKE</div>
-  </article>
-</div>
-<nav class="nav-bar">
-  <div class="button-container">
-    <button class="button"><svg class="icon" viewBox="0 0 1024 1024" fill="currentColor"><path d="M946.5 505L560.1 118.8l-25.9-25.9a31.5 31.5 0 0 0-44.4 0L77.5 505a63.9 63.9 0 0 0-18.8 46c.4 35.2 29.7 63.3 64.9 63.3h42.5V940h691.8V614.3h43.4c17.1 0 33.2-6.7 45.3-18.8a63.6 63.6 0 0 0 18.7-45.3c0-17-6.7-33.1-18.8-45.2zM568 868H456V664h112v204zm217.9-325.7V868H632V640c0-22.1-17.9-40-40-40H432c-22.1 0-40 17.9-40 40v228H238.1V542.3h-96l370-369.7 23.1 23.1L882 542.3h-96.1z"></path></svg></button>
-    <button class="button"><svg class="icon" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></button>
-    <button class="button"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5a5.5 5.5 0 0 1 3.096 10.047 9.005 9.005 0 0 1 5.9 8.181.75.75 0 1 1-1.499.044 7.5 7.5 0 0 0-14.993 0 .75.75 0 0 1-1.5-.045 9.005 9.005 0 0 1 5.9-8.18A5.5 5.5 0 0 1 12 2.5ZM8 8a4 4 0 1 0 8 0 4 4 0 1 0-8 0Z"></path></svg></button>
-    <button class="button"><svg class="icon" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle></svg></button>
-  </div>
-</nav>
-<script>
-  const card = document.getElementById('main-card');
-  const btnVideo = document.getElementById('btn-video');
-  const btnReviews = document.getElementById('btn-reviews');
-  const videoOverlay = document.getElementById('video-overlay');
-  const reviewBubbles = document.getElementById('review-bubbles');
-  const bioContent = document.getElementById('bio-content');
-  const reviewsContent = document.getElementById('reviews-content');
-  const btnBack = document.getElementById('btn-back');
 
-  btnVideo.onclick = () => {
-    videoOverlay.style.display = 'grid';
-    reviewBubbles.style.display = 'none';
-    btnBack.style.display = 'block';
-    bioContent.style.display = 'none';
-    reviewsContent.classList.add('hidden');
-  }
+    <div class="nav-bar">
+      <div class="button-container">
+        <button class="nav-button" onclick="window.location.href='discover.html'">
+          <svg viewBox="0 0 1024 1024" fill="currentColor" class="icon"><path d="M946.5 505L560.1 118.8l-25.9-25.9a31.5 31.5 0 0 0-44.4 0L77.5 505a63.9 63.9 0 0 0-18.8 46c.4 35.2 29.7 63.3 64.9 63.3h42.5V940h691.8V614.3h43.4c17.1 0 33.2-6.7 45.3-18.8a63.6 63.6 0 0 0 18.7-45.3c0-17-6.7-33.1-18.8-45.2zM568 868H456V664h112v204zm217.9-325.7V868H632V640c0-22.1-17.9-40-40-40H432c-22.1 0-40 17.9-40 40v228H238.1V542.3h-96l370-369.7 23.1 23.1L882 542.3h-96.1z"></path></svg>
+        </button>
+        <button class="nav-button" onclick="window.location.href='Explore.html'">
+          <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor" class="icon"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </button>
+        <button class="nav-button" onclick="window.location.href='profile.html'">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="icon"><path d="M12 2.5a5.5 5.5 0 0 1 3.096 10.047 9.005 9.005 0 0 1 5.9 8.181.75.75 0 1 1-1.499.044 7.5 7.5 0 0 0-14.993 0 .75.75 0 1 1-1.5-.045 9.005 9.005 0 0 1 5.9-8.18A5.5 5.5 0 0 1 12 2.5ZM8 8a4 4 0 1 0 8 0 4 4 0 1 0-8 0Z"></path></svg>
+        </button>
+        <button class="nav-button" onclick="window.location.href='Store.html'">
+          <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor" class="icon"><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle></svg>
+        </button>
+      </div>
+    </div>
+  </main>
 
-  btnReviews.onclick = () => {
-    bioContent.style.display = 'none';
-    reviewsContent.classList.remove('hidden');
-    videoOverlay.style.display = 'none';
-    reviewBubbles.style.display = 'block';
-    btnBack.style.display = 'block';
-  }
+  <script>
+    const plusFeatures = document.getElementById('plus-features');
+    const ultraFeatures = document.getElementById('ultra-features');
+    const plusBtn = document.getElementById('plus-btn');
+    const ultraBtn = document.getElementById('ultra-btn');
+    const subscribeBtn = document.getElementById('subscribe-btn');
 
-  btnBack.onclick = () => {
-    videoOverlay.style.display = 'none';
-    reviewBubbles.style.display = 'none';
-    bioContent.style.display = 'block';
-    reviewsContent.classList.add('hidden');
-    btnBack.style.display = 'none';
-  }
-
-  // Drag logic remains unchanged
-  let startX = 0, currentX = 0, isDragging = false;
-  function handleStart(e) {
-    if (e.target.closest('button')) return;
-    startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-    isDragging = true;
-    card.style.transition = 'none';
-  }
-  function handleMove(e) {
-    if (!isDragging) return;
-    currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-    const diff = currentX - startX;
-    card.style.transform = `translateX(${diff}px) rotate(${diff/15}deg)`;
-    document.querySelector('.nope').style.opacity = diff < -60 ? 1 : 0;
-    document.querySelector('.like').style.opacity = diff > 60 ? 1 : 0;
-  }
-  function handleEnd() {
-    if (!isDragging) return;
-    isDragging = false;
-    const diff = currentX - startX;
-    card.style.transition = 'transform 0.45s ease';
-    if (Math.abs(diff) > 120) {
-      card.classList.add(diff > 0 ? 'gone-right' : 'gone-left');
-    } else {
-      card.style.transform = '';
+    function showPlus() {
+      plusFeatures.style.display = 'flex';
+      ultraFeatures.style.display = 'none';
+      subscribeBtn.textContent = 'GET SEEN PLUS';
+      plusBtn.style.background = 'linear-gradient(145deg, rgba(124,58,237,0.12), rgba(124,58,237,0.04))';
+      ultraBtn.style.background = '#000';
     }
-    document.querySelectorAll('.choice-btn').forEach(el => el.style.opacity = '0');
-  }
-  card.addEventListener('touchstart', handleStart);
-  card.addEventListener('touchmove', handleMove);
-  card.addEventListener('touchend', handleEnd);
-  card.addEventListener('mousedown', handleStart);
-  window.addEventListener('mousemove', handleMove);
-  window.addEventListener('mouseup', handleEnd);
-</script>
+
+    function showUltra() {
+      plusFeatures.style.display = 'none';
+      ultraFeatures.style.display = 'flex';
+      subscribeBtn.textContent = 'GET SEEN ULTRA';
+      ultraBtn.style.background = 'linear-gradient(145deg, rgba(236,72,153,0.18), rgba(6,182,212,0.12))';
+      plusBtn.style.background = '#000';
+    }
+
+    plusBtn.addEventListener('click', showPlus);
+    ultraBtn.addEventListener('click', showUltra);
+
+    showPlus();
+  </script>
 </body>
 </html>
