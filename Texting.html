@@ -61,21 +61,16 @@
       width: 100vw;
       height: 100vh;
       max-width: 430px;
-      max-height: 90vh;
       z-index: 2;
       overflow: hidden;
       box-shadow: 0 5px 30px rgba(0, 0, 0, .2);
       background: rgba(0, 0, 0, .5);
       border-radius: 30px;
       display: flex;
-      justify-content: space-between;
       flex-direction: column;
     }
     @media screen and (max-width: 450px) {
-      .chat {
-        max-height: 100vh;
-        border-radius: 0;
-      }
+      .chat { border-radius: 0; }
     }
 
     .chat-title {
@@ -86,8 +81,22 @@
       color: #fff;
       text-transform: uppercase;
       text-align: left;
-      padding: 10px 10px 10px 50px;
+      padding: 10px 10px 10px 80px; /* Adjusted for back button */
     }
+    
+    /* Back Button Styling */
+    .back-btn {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      z-index: 3;
+      text-decoration: none;
+    }
+
     .chat-title h1, .chat-title h2 {
       font-weight: normal;
       font-size: 10px;
@@ -103,7 +112,7 @@
       position: absolute;
       z-index: 1;
       top: 8px;
-      left: 9px;
+      left: 42px; /* Adjusted for back button */
       border-radius: 30px;
       width: 30px;
       height: 30px;
@@ -303,6 +312,7 @@
 
   <div class="chat">
     <div class="chat-title">
+      <a href="messages.html" class="back-btn"><i class="fas fa-chevron-left"></i></a>
       <h1><label for="bg-upload">Loading...</label></h1>
       <input type="file" id="bg-upload" style="display: none;" accept="image/*">
       <h2>Active now</h2>
@@ -326,21 +336,44 @@
   <div class="bg"></div>
 
   <script>
-    // === DYNAMIC CONTACT NAME & AVATAR ===
-    const urlParams = new URLSearchParams(window.location.search);
-    const contactName = urlParams.get('name') || 'Unknown Contact';
-
-    // Update name in header
-    document.querySelector('.chat-title h1 label').textContent = contactName;
-
-    // Update avatar using pravatar (same as in messages.html)
-    const avatarImg = document.querySelector('.chat-title .avatar img');
-    if (avatarImg) {
-      avatarImg.src = `https://i.pravatar.cc/150?u=${encodeURIComponent(contactName.toLowerCase())}`;
-      avatarImg.alt = contactName;
+    // --- NAVIGATION LOGIC ---
+    function goBack() {
+      window.location.href = 'messages.html';
     }
 
-    // === Original chat functionality (unchanged) ===
+    // Swipe Gesture Detection
+    let touchstartX = 0;
+    let touchendX = 0;
+    
+    document.addEventListener('touchstart', e => {
+      touchstartX = e.changedTouches[0].screenX;
+    });
+
+    document.addEventListener('touchend', e => {
+      touchendX = e.changedTouches[0].screenX;
+      handleGesture();
+    });
+
+    function handleGesture() {
+      // Swipe Left detection (moves right to left)
+      if (touchstartX - touchendX > 100) {
+        goBack();
+      }
+    }
+
+    // Dynamic contact name & avatar
+    const urlParams = new URLSearchParams(window.location.search);
+    const contactName = urlParams.get('name') || 'Unknown Contact';
+    document.querySelector('.chat-title h1 label').textContent = contactName;
+
+    const headerAvatar = document.querySelector('.chat-title .avatar img');
+    if (headerAvatar) {
+      headerAvatar.src = `https://i.pravatar.cc/150?u=${encodeURIComponent(contactName.toLowerCase())}`;
+      headerAvatar.alt = contactName;
+    }
+
+    const contactAvatarUrl = `https://i.pravatar.cc/150?u=${encodeURIComponent(contactName.toLowerCase())}`;
+
     var $messages = $('.messages-content'),
         d, h, m,
         i = 0;
@@ -395,11 +428,18 @@
 
     function fakeMessage() {
       if ($('.message-input').val() != '') return false;
-      $('<div class="message loading new"><figure class="avatar"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure><span></span></div>').appendTo($('.mCSB_container'));
+
+      $('<div class="message loading new"><figure class="avatar"><img src="' + contactAvatarUrl + '" /></figure><span></span></div>')
+        .appendTo($('.mCSB_container'));
+
       updateScrollbar();
+
       setTimeout(function() {
         $('.message.loading').remove();
-        $('<div class="message new"><figure class="avatar"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure>' + Fake[i] + '</div>').appendTo($('.mCSB_container')).addClass('new');
+        $('<div class="message new"><figure class="avatar"><img src="' + contactAvatarUrl + '" /></figure>' + Fake[i] + '</div>')
+          .appendTo($('.mCSB_container'))
+          .addClass('new');
+
         setDate();
         updateScrollbar();
         i++;
