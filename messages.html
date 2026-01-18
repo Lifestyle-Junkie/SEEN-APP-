@@ -14,13 +14,11 @@
       --clr-cyan: #06b6d4;
       --mythic-gradient: linear-gradient(135deg, #7c3aed, #ec4899, #06b6d4, #7c3aed);
     }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-
     body {
       background: #000;
       color: #fff;
@@ -28,7 +26,6 @@
       height: 100dvh;
       overflow: hidden;
     }
-
     .app-container {
       position: relative;
       width: 100%;
@@ -39,7 +36,6 @@
       display: flex;
       flex-direction: column;
     }
-
     .dynamic-island {
       position: absolute;
       top: 12px;
@@ -51,7 +47,6 @@
       border-radius: 20px;
       z-index: 3000;
     }
-
     .logo-text {
       font-weight: 900;
       font-size: 1.4rem;
@@ -61,7 +56,6 @@
       -webkit-text-fill-color: transparent;
       text-transform: uppercase;
     }
-
     .content {
       flex: 1;
       padding: 1.5rem;
@@ -70,16 +64,13 @@
       background: #000;
       padding-bottom: 110px;
     }
-
     .content::-webkit-scrollbar { display: none; }
-
     .header-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1.5rem;
     }
-
     .search-bar {
       display: flex;
       align-items: center;
@@ -89,7 +80,6 @@
       margin-bottom: 1.5rem;
       border: 1px solid rgba(255,255,255,0.05);
     }
-
     .search-bar input {
       flex: 1;
       background: transparent;
@@ -98,7 +88,6 @@
       font-size: 1rem;
       outline: none;
     }
-
     .filter-btn {
       color: #a78bfa;
       font-size: 0.85rem;
@@ -106,8 +95,6 @@
       text-transform: uppercase;
       letter-spacing: 1px;
     }
-
-    /* RAINBOW BORDER CHAT TILES */
     .chat-tile {
       position: relative;
       padding: 1.5px;
@@ -116,14 +103,15 @@
       background: var(--mythic-gradient);
       background-size: 200% 200%;
       animation: gradientMove 4s ease infinite;
+      display: block;
+      text-decoration: none;
+      color: inherit;
     }
-
     @keyframes gradientMove {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
     .chat-tile-inner {
       border-radius: 23px;
       background: #000;
@@ -131,15 +119,12 @@
       display: flex;
       align-items: center;
     }
-
     .chat-tile.read .chat-preview { color: #555; }
     .chat-tile.read .chat-name { color: #ccc; }
-
     .avatar-wrapper {
       position: relative;
       margin-right: 1.1rem;
     }
-
     .avatar {
       width: 58px;
       height: 58px;
@@ -147,7 +132,6 @@
       object-fit: cover;
       border: 2px solid #000;
     }
-
     .online-indicator {
       position: absolute;
       bottom: 2px;
@@ -158,19 +142,16 @@
       border: 3px solid #000;
       border-radius: 50%;
     }
-
     .chat-info {
       flex: 1;
       min-width: 0;
     }
-
     .chat-name {
       font-weight: 700;
       font-size: 1.05rem;
       margin-bottom: 2px;
       color: #fff;
     }
-
     .chat-preview {
       font-size: 0.9rem;
       color: #fff;
@@ -178,14 +159,12 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
     .timestamp {
       font-size: 0.75rem;
       color: #666;
       font-weight: 600;
       margin-left: 8px;
     }
-
     .nav-bar {
       position: absolute;
       bottom: 0;
@@ -199,7 +178,6 @@
       border-top: 1px solid rgba(255,255,255,0.1);
       padding-bottom: env(safe-area-inset-bottom);
     }
-
     .button-row {
       display: flex;
       justify-content: space-around;
@@ -207,7 +185,6 @@
       width: 100%;
       flex: 1;
     }
-
     .home-indicator {
       width: 134px;
       height: 5px;
@@ -216,8 +193,6 @@
       margin: 8px auto;
       opacity: 0.3;
     }
-
-    /* Navigation button/link styling */
     .nav-btn {
       background: none;
       border: none;
@@ -232,19 +207,9 @@
       text-decoration: none;
       color: #fff;
     }
-
-    .nav-btn:hover {
-      color: #a78bfa;
-    }
-
-    .nav-btn:active {
-      transform: scale(0.92);
-    }
-
-    .nav-btn.active {
-      color: #a78bfa;
-    }
-
+    .nav-btn:hover { color: #a78bfa; }
+    .nav-btn:active { transform: scale(0.92); }
+    .nav-btn.active { color: #a78bfa; }
     .nav-btn .icon {
       width: 26px;
       height: 26px;
@@ -252,7 +217,6 @@
   </style>
 </head>
 <body>
-
   <div class="app-container">
     <div class="dynamic-island"></div>
 
@@ -272,7 +236,8 @@
         <input type="text" id="searchInput" placeholder="Search" />
       </div>
 
-      <div class="chat-tile">
+      <!-- Now clickable with name parameter -->
+      <a href="Texting.html?name=Ella" class="chat-tile">
         <div class="chat-tile-inner">
           <div class="avatar-wrapper">
             <img class="avatar" src="https://i.pravatar.cc/150?u=ella" alt="Ella">
@@ -284,9 +249,9 @@
           </div>
           <div class="timestamp">7:04 PM</div>
         </div>
-      </div>
+      </a>
 
-      <div class="chat-tile read">
+      <a href="Texting.html?name=Mia" class="chat-tile read">
         <div class="chat-tile-inner">
           <div class="avatar-wrapper">
             <img class="avatar" src="https://i.pravatar.cc/150?u=mia" alt="Mia">
@@ -297,9 +262,9 @@
           </div>
           <div class="timestamp">5:31 PM</div>
         </div>
-      </div>
+      </a>
 
-      <div class="chat-tile read">
+      <a href="Texting.html?name=Sophia" class="chat-tile read">
         <div class="chat-tile-inner">
           <div class="avatar-wrapper">
             <img class="avatar" src="https://i.pravatar.cc/150?u=sophia" alt="Sophia">
@@ -310,9 +275,9 @@
           </div>
           <div class="timestamp">3:15 PM</div>
         </div>
-      </div>
+      </a>
 
-      <div class="chat-tile">
+      <a href="Texting.html?name=Ava" class="chat-tile">
         <div class="chat-tile-inner">
           <div class="avatar-wrapper">
             <img class="avatar" src="https://i.pravatar.cc/150?u=ava" alt="Ava">
@@ -324,10 +289,9 @@
           </div>
           <div class="timestamp">3:01 PM</div>
         </div>
-      </div>
+      </a>
     </div>
 
-    <!-- Updated Navigation with links -->
     <nav class="nav-bar">
       <div class="button-row">
         <a href="discover.html" class="nav-btn">
@@ -335,19 +299,16 @@
             <path d="M946.5 505L560.1 118.8l-25.9-25.9a31.5 31.5 0 0 0-44.4 0L77.5 505a63.9 63.9 0 0 0-18.8 46c.4 35.2 29.7 63.3 64.9 63.3h42.5V940h691.8V614.3h43.4c17.1 0 33.2-6.7 45.3-18.8a63.6 63.6 0 0 0 18.7-45.3c0-17-6.7-33.1-18.8-45.2zM568 868H456V664h112v204zm217.9-325.7V868H632V640c0-22.1-17.9-40-40-40H432c-22.1 0-40 17.9-40 40v228H238.1V542.3h-96l370-369.7 23.1 23.1L882 542.3h-96.1z"></path>
           </svg>
         </a>
-
         <a href="Explore.html" class="nav-btn">
           <svg class="icon" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
             <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
           </svg>
         </a>
-
         <a href="profile.html" class="nav-btn active">
           <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2.5a5.5 5.5 0 0 1 3.096 10.047 9.005 9.005 0 0 1 5.9 8.181.75.75 0 1 1-1.499.044 7.5 7.5 0 0 0-14.993 0 .75.75 0 0 1-1.5-.045 9.005 9.005 0 0 1 5.9-8.18A5.5 5.5 0 0 1 12 2.5ZM8 8a4 4 0 1 0 8 0 4 4 0 1 0-8 0Z"></path>
           </svg>
         </a>
-
         <a href="store.html" class="nav-btn">
           <svg class="icon" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
