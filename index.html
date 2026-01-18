@@ -23,6 +23,7 @@
       align-items: center;
       justify-content: flex-start;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     .logo {
@@ -124,6 +125,8 @@
       width: 90%;
       max-width: 350px;
       margin-top: 20px;
+      display: flex;
+      flex-direction: column;
     }
 
     .form-control {
@@ -174,22 +177,25 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;           /* ← original spacing */
+      gap: 12px;
+      margin-bottom: 20px;
     }
 
     .btn {
       border: none;
-      width: 7em;
-      height: 2.8em;        /* ← original height */
+      flex: 1;
+      height: 2.8em;
       border-radius: 3em;
-      display: flex;
+      display: inline-flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;             /* ← original gap between star and text */
-      background: #111;     /* ← original dark background */
+      gap: 8px;
+      background: #111;
       cursor: pointer;
       transition: all 450ms ease-in-out;
       border: 1px solid #222;
+      padding: 0 15px;
+      text-decoration: none;
     }
 
     .btn:hover {
@@ -207,19 +213,22 @@
     }
 
     .sparkle {
-      fill: #888;           /* ← gray like original */
-      width: 14px;          /* ← original size */
+      fill: #888;
+      width: 14px;
       height: 14px;
+      flex-shrink: 0;
+      display: block;
       transition: all 800ms ease;
     }
 
     .text {
       font-family: 'Montserrat', sans-serif;
-      font-weight: 700;     /* ← original weight */
-      color: #888;          /* ← gray like original */
-      font-size: 10px;      /* ← original size */
+      font-weight: 700;
+      color: #888;
+      font-size: 10px;
       letter-spacing: 1px;
       transition: color 0.4s;
+      line-height: 1;
     }
 
     .btn:hover .sparkle {
@@ -237,6 +246,31 @@
       text-align: right;
       margin-bottom: 10px;
       cursor: pointer;
+    }
+
+    .guest-link {
+      text-align: center;
+      text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #777;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+      cursor: pointer;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      width: fit-content;
+      align-self: center;
+    }
+
+    .guest-link:hover {
+      color: #fff;
+      border-bottom-color: #c084fc;
+      background: var(--mythic-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     @media (max-width: 600px) {
@@ -299,6 +333,8 @@
         <span class="text">REGISTER</span>
       </button>
     </div>
+    
+    <a href="discovery.html" class="guest-link">CONTINUE AS GUEST</a>
   </form>
 
   <script>
