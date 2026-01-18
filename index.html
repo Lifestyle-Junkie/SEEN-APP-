@@ -2,375 +2,345 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Seen Login</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+  <title>Mythic Swipe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap">
+
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
+    :root {
+      --bg: #000;
+      --clr-white: #fff;
+      --clr-black: #000101;
+      --clr-red: #ff5168;
+      --clr-green: #63ff68;
     }
 
     body {
-      background-color: #0f0f0f;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      height: 100dvh;
+      overflow: hidden;
     }
 
-    .carousel-container {
-      position: relative;
-      width: 90%;
-      max-width: 350px;
-      height: 690px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 20px 0 10px;
-    }
-
-    .carousel {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .slide {
-      position: absolute;
-      width: 100%;
-      height: 640px;
-      border-radius: 20px;
-      background-size: cover;
-      background-position: center;
-      transition: transform 0.5s ease, filter 0.5s ease, opacity 0.5s ease;
-      padding: 2px;
-      z-index: 5;
-    }
-
-    .slide.active {
-      transform: scale(1.2) translateX(0);
-      filter: none;
-      opacity: 1;
-      z-index: 15;
-    }
-
-    .slide.left {
-      transform: scale(0.9) translateX(-180px);
-      filter: grayscale(80%) blur(2px);
-      opacity: 0.8;
-      z-index: 10;
-    }
-
-    .slide.right {
-      transform: scale(0.9) translateX(180px);
-      filter: grayscale(80%) blur(2px);
-      opacity: 0.8;
-      z-index: 10;
-    }
-
-    .slide.far {
-      transform: scale(0.7) translateX(-240px);
-      filter: grayscale(100%) blur(4px);
-      opacity: 0.6;
-      z-index: 5;
-    }
-
-    .slide.far.right {
-      transform: scale(0.7) translateX(240px);
-    }
-
-    .logo {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 3.2rem;
-      font-weight: 700;
-      font-family: 'Montserrat', 'Segoe UI', sans-serif;
-      color: #f8eadd;
-      text-transform: uppercase;
-      text-align: center;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .tagline {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: #ccc;
-      font-size: 0.8rem;
-      font-family: 'Montserrat', 'Segoe UI', sans-serif;
-      text-align: center;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .login-form {
-      width: 90%;
-      max-width: 350px;
-      margin-top: 20px; /* Added to lower the form */
-    }
-
-    .form-control {
-      position: relative;
-      margin: 10px 0 20px;
-      width: 100%;
-    }
-
-    .form-control input {
-      background-color: transparent;
-      border: 0;
-      border-bottom: 2px #fff solid;
-      display: block;
-      width: 100%;
-      padding: 8px 0;
-      font-size: 14px;
-      color: #fff;
-    }
-
-    .form-control input:focus,
-    .form-control input:valid {
-      outline: 0;
-      border-bottom-color: #f14e75;
-    }
-
-    .form-control label {
-      position: absolute;
-      top: 8px;
+    /* Fixed App Header - Outside of card logic */
+    .screen-header {
+      position: fixed;
+      top: clamp(40px, 8vh, 60px); /* Responsive top spacing for iPhone Dynamic Island */
       left: 0;
-      pointer-events: none;
-    }
-
-    .form-control label span {
-      display: inline-block;
-      font-size: 14px;
-      min-width: 5px;
-      color: #fff;
-      transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    }
-
-    .form-control input:focus + label span,
-    .form-control input:valid + label span {
-      color: #f14e75;
-      transform: translateY(-20px);
-    }
-
-    .login-form .actions {
+      right: 0;
+      padding: 0 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      z-index: 2000;
+      pointer-events: none;
     }
 
-    .btn {
+    .top-icon-btn {
+      width: 48px;
+      height: 48px;
+      background: rgba(25, 25, 25, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      cursor: pointer;
+      pointer-events: auto;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    }
+
+    .red-dot {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 10px;
+      height: 10px;
+      background-color: var(--clr-red);
+      border: 2px solid #000;
+      border-radius: 50%;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    .animate-mythic { animation: spin 6s linear infinite; }
+
+    article {
+      position: absolute;
+      inset: 0;
+      transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .gone-left  { transform: translateX(-140%) rotate(-35deg) !important; opacity: 0; }
+    .gone-right { transform: translateX(140%) rotate(35deg)  !important; opacity: 0; }
+
+    /* Bottom nav - Exact Original Style restored */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      background: var(--bg);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-top: 1px solid #333;
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+      z-index: 1000;
+    }
+
+    .button-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      justify-items: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      padding: 0 8px;
+    }
+
+    .button {
+      background: none;
       border: none;
-      width: 7em;
-      height: 2.5em;
-      border-radius: 3em;
+      color: var(--clr-white);
+      font-size: 24px;
+      cursor: pointer;
+      transition: color 0.2s;
+      width: 100%;
+      max-width: 100px;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
-      background: #1C1A1C;
-      cursor: pointer;
-      transition: all 450ms ease-in-out;
     }
 
-    .sparkle {
-      fill: #AAAAAA;
-      transition: all 800ms ease;
+    .button:hover { color: #ccc; }
+    .button .icon { width: 26px; height: 26px; }
+
+    /* Swipe labels */
+    .choice-btn {
+      position: absolute;
+      top: 40%;
+      transform: translateY(-50%);
+      background: transparent;
+      font-size: 3.5rem;
+      font-weight: 900;
+      padding: 0 20px;
+      opacity: 0;
+      pointer-events: none;
+      text-shadow: 0 0 12px rgba(0,0,0,0.7);
     }
 
-    .text {
-      font-weight: 600;
-      color: #AAAAAA;
-      font-size: x-small;
-    }
+    .nope { left: 20px; color: var(--clr-red); transform: rotate(-15deg); }
+    .like { right: 20px; color: var(--clr-green); transform: rotate(15deg); }
 
-    .btn:hover {
-      background: linear-gradient(0deg, #f14e75, #d43a5e);
-      box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4),
-                  inset 0px -4px 0px 0px rgba(0, 0, 0, 0.2),
-                  0px 0px 0px 4px rgba(255, 255, 255, 0.2),
-                  0px 0px 180px 0px #f14e75;
-      transform: translateY(-2px);
-    }
-
-    .btn:hover .text {
+    /* Back button */
+    #btn-back {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 100;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(139,92,246,0.4);
       color: white;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      display: none;
+      cursor: pointer;
     }
 
-    .btn:hover .sparkle {
-      fill: white;
-      transform: scale(1.2);
-    }
-
-    .forgot {
-      font-size: 0.7rem;
-      color: #888;
-      text-align: right;
-      margin-bottom: 5px;
-    }
-
-    @media (max-width: 600px) {
-      .carousel-container {
-        height: 530px;
-      }
-
-      .slide {
-        height: 480px;
-        padding: 2px;
-      }
-
-      .slide.active {
-        transform: scale(1.1) translateX(0);
-      }
-
-      .slide.left {
-        transform: scale(0.8) translateX(-130px);
-      }
-
-      .slide.right {
-        transform: scale(0.8) translateX(130px);
-      }
-
-      .slide.far {
-        transform: scale(0.6) translateX(-160px);
-      }
-
-      .slide.far.right {
-        transform: scale(0.6) translateX(160px);
-      }
-
-      .logo {
-        font-size: 2.2rem;
-      }
-
-      .tagline {
-        font-size: 0.6rem;
-      }
+    /* Video overlay */
+    #video-overlay {
+      position: absolute;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      z-index: 30;
     }
   </style>
 </head>
 <body>
-  <div class="carousel-container">
-    <div class="carousel">
-      <!-- Slides will be injected here -->
+
+<header class="screen-header">
+  <button class="top-icon-btn" title="Notifications">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+  </button>
+
+  <button class="top-icon-btn" title="Messages" onclick="window.location.href='messages.html'">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    <div class="red-dot"></div>
+  </button>
+</header>
+
+<div class="relative h-full w-full max-w-[420px] mx-auto px-3 pt-2 pb-[70px]">
+  <article id="main-card" class="w-full h-full rounded-3xl overflow-hidden shadow-2xl shadow-purple-900/30 relative">
+    <div class="absolute inset-0 animate-mythic p-[2px] bg-[conic-gradient(from_0deg,#7c3aed,#ec4899,#06b6d4,#7c3aed)]">
+      <div class="w-full h-full bg-black rounded-3xl"></div>
     </div>
+
+    <div class="absolute inset-[2px] bg-gradient-to-b from-gray-950 to-black rounded-3xl flex flex-col overflow-hidden">
+      <button id="btn-back">← Back</button>
+
+      <div class="relative h-[60%]">
+        <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=500" class="w-full h-full object-cover brightness-90" alt="profile" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent/40"></div>
+        <div class="absolute top-5 left-5 px-3 py-1 bg-black/60 backdrop-blur-md rounded-full border border-amber-500/50 text-amber-400 text-xs font-black uppercase tracking-wider">Mythic</div>
+
+        <div id="video-overlay">
+          <div class="w-40 h-40 rounded-full border-4 border-purple-500 shadow-2xl overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=500" class="w-full h-full object-cover" alt="">
+            <div class="absolute inset-0 bg-purple-600/30 flex items-center justify-center">
+              <div class="w-0 h-0 border-l-[48px] border-l-white border-y-[30px] border-y-transparent ml-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-1 p-6 flex flex-col">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-3xl font-black">Jefferson, 25</h2>
+          <div class="bg-purple-700 px-4 py-1 rounded-lg font-black">4.9</div>
+        </div>
+
+        <div class="flex-1 bg-black/40 rounded-2xl p-5 border border-white/10 overflow-y-auto">
+          <div id="bio-content" class="text-base text-gray-300 leading-relaxed italic">
+            Journalist by day, mythic explorer by night. Looking for someone to share coffee and headlines with.
+          </div>
+          <div id="reviews-content" class="hidden space-y-5">
+            <div class="border-b border-white/10 pb-4">
+              <div class="flex justify-between text-sm font-bold text-amber-400">
+                <span>Sarah</span> <span>★★★★★</span>
+              </div>
+              <p class="text-sm text-gray-300 mt-1">Incredible listener! Always makes you feel heard.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-between mt-5 text-sm font-black tracking-wider uppercase text-purple-400">
+          <button id="btn-video" class="hover:text-white underline underline-offset-4">Watch Video</button>
+          <button id="btn-reviews" class="hover:text-white underline underline-offset-4">Reviews (12)</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="choice-btn nope">NOPE</div>
+    <div class="choice-btn like">LIKE</div>
+  </article>
+</div>
+
+<div class="nav-bar">
+  <div class="button-container">
+    <button class="button" title="Home" aria-label="Go to Home">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 1024 1024" fill="currentColor" class="icon">
+        <path d="M946.5 505L560.1 118.8l-25.9-25.9a31.5 31.5 0 0 0-44.4 0L77.5 505a63.9 63.9 0 0 0-18.8 46c.4 35.2 29.7 63.3 64.9 63.3h42.5V940h691.8V614.3h43.4c17.1 0 33.2-6.7 45.3-18.8a63.6 63.6 0 0 0 18.7-45.3c0-17-6.7-33.1-18.8-45.2zM568 868H456V664h112v204zm217.9-325.7V868H632V640c0-22.1-17.9-40-40-40H432c-22.1 0-40 17.9-40 40v228H238.1V542.3h-96l370-369.7 23.1 23.1L882 542.3h-96.1z"></path>
+      </svg>
+    </button>
+
+    <button class="button" title="Discover" aria-label="Discover Profiles" onclick="window.location.href='explore.html'">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor" class="icon">
+        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linejoin="round" stroke-linecap="round"></path>
+      </svg>
+    </button>
+
+    <button class="button" title="Profile" aria-label="Go to Profile" onclick="window.location.href='profile.html'">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" class="icon">
+        <path d="M12 2.5a5.5 5.5 0 0 1 3.096 10.047 9.005 9.005 0 0 1 5.9 8.181.75.75 0 1 1-1.499.044 7.5 7.5 0 0 0-14.993 0 .75.75 0 0 1-1.5-.045 9.005 9.005 0 0 1 5.9-8.18A5.5 5.5 0 0 1 12 2.5ZM8 8a4 4 0 1 0 8 0 4 4 0 1 0-8 0Z"></path>
+      </svg>
+    </button>
+
+    <button class="button" title="Cart" aria-label="View Cart" onclick="window.location.href='example.html'">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor" class="icon">
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        <circle cx="9" cy="21" r="1"></circle>
+        <circle cx="20" cy="21" r="1"></circle>
+      </svg>
+    </button>
   </div>
+</div>
 
-  <form class="login-form">
-    <div class="form-control">
-      <input required type="text">
-      <label>
-        <span style="transition-delay:350ms">U</span>
-        <span style="transition-delay:300ms">s</span>
-        <span style="transition-delay:250ms">e</span>
-        <span style="transition-delay:200ms">r</span>
-        <span style="transition-delay:150ms">n</span>
-        <span style="transition-delay:100ms">a</span>
-        <span style="transition-delay:50ms">m</span>
-        <span style="transition-delay:0ms">e</span>
-      </label>
-    </div>
-    <div class="form-control">
-      <input required type="password">
-      <label>
-        <span style="transition-delay:350ms">P</span>
-        <span style="transition-delay:300ms">a</span>
-        <span style="transition-delay:250ms">s</span>
-        <span style="transition-delay:200ms">s</span>
-        <span style="transition-delay:150ms">w</span>
-        <span style="transition-delay:100ms">o</span>
-        <span style="transition-delay:50ms">r</span>
-        <span style="transition-delay:0ms">d</span>
-      </label>
-    </div>
-    <div class="forgot">Forgot password?</div>
-    <div class="actions">
-      <button type="submit" class="btn">
-        <svg height="16" width="16" fill="#FFFFFF" viewBox="0 0 24 24" class="sparkle">
-          <path d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245Z"/>
-        </svg>
-        <span class="text">LOGIN</span>
-      </button>
-      <button type="button" class="btn">
-        <svg height="16" width="16" fill="#FFFFFF" viewBox="0 0 24 24" class="sparkle">
-          <path d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245Z"/>
-        </svg>
-        <span class="text">REGISTER</span>
-      </button>
-    </div>
-  </form>
+<script>
+  const card = document.getElementById('main-card');
+  const btnBack = document.getElementById('btn-back');
+  const videoOverlay = document.getElementById('video-overlay');
+  const bioContent = document.getElementById('bio-content');
+  const reviewsContent = document.getElementById('reviews-content');
+  const btnVideo = document.getElementById('btn-video');
+  const btnReviews = document.getElementById('btn-reviews');
 
-  <script>
-    const slidesData = [
-      { image: 'gamergirl.png', label: 'Gamer Girl', logo: 'seen', tagline: 'Find gothically inclined people near you.' },
-      { image: 'Girlwithhat.png', label: 'Girl with Hat', logo: 'seen', tagline: 'Discover real energy. Real people.' },
-      { image: 'Lightskin.png', label: 'Lightskin', logo: 'seen', tagline: 'She’s waiting. Will you swipe?' }
-    ];
+  let startX = 0, currentX = 0, isDragging = false, currentView = 'bio';
 
-    const carousel = document.querySelector('.carousel');
-    let currentIndex = 0;
+  function showView(view) {
+    currentView = view;
+    btnBack.style.display = view === 'bio' ? 'none' : 'block';
+    videoOverlay.style.display = view === 'video' ? 'grid' : 'none';
+    bioContent.style.display = view === 'bio' ? 'block' : 'none';
+    reviewsContent.classList.toggle('hidden', view !== 'reviews');
+  }
 
-    function createSlides() {
-      carousel.innerHTML = '';
-      slidesData.forEach((slide, index) => {
-        const slideElement = document.createElement('div');
-        slideElement.classList.add('slide');
-        slideElement.style.backgroundImage = `url(${slide.image})`;
-        slideElement.dataset.index = index;
+  btnVideo.addEventListener('click', () => showView('video'));
+  btnReviews.addEventListener('click', () => showView('reviews'));
+  btnBack.addEventListener('click', () => showView('bio'));
 
-        const logoElement = document.createElement('div');
-        logoElement.classList.add('logo');
-        logoElement.textContent = slide.logo.toUpperCase();
+  function handleStart(e) {
+    if (e.target.closest('button') || e.target.closest('#video-overlay') || e.target.closest('.top-icon-btn')) return;
+    startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+    isDragging = true;
+    card.style.transition = 'none';
+  }
 
-        const taglineElement = document.createElement('div');
-        taglineElement.classList.add('tagline');
-        taglineElement.textContent = slide.tagline;
-
-        slideElement.appendChild(logoElement);
-        slideElement.appendChild(taglineElement);
-        carousel.appendChild(slideElement);
-      });
-      updateCarousel();
+  function handleMove(e) {
+    if (!isDragging) return;
+    currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+    const diff = currentX - startX;
+    if (currentView !== 'bio' && diff < -100) {
+      showView('bio');
+      isDragging = false;
+      card.style.transform = '';
+      return;
     }
+    const rotate = diff / 12;
+    card.style.transform = `translateX(${diff}px) rotate(${rotate}deg)`;
+    const threshold = 70;
+    const opacity = Math.min(Math.abs(diff) / 120, 1);
+    document.querySelector('.nope').style.opacity = diff < -threshold ? opacity : 0;
+    document.querySelector('.like').style.opacity = diff > threshold ? opacity : 0;
+  }
 
-    function updateCarousel() {
-      const slides = document.querySelectorAll('.slide');
-      slides.forEach((slide, index) => {
-        const offset = ((index - currentIndex + slidesData.length) % slidesData.length);
-        slide.className = 'slide';
-        if (offset === 0) {
-          slide.classList.add('active');
-        } else if (offset === 1 || offset === slidesData.length - 1) {
-          slide.classList.add(offset === 1 ? 'right' : 'left');
-        } else {
-          slide.classList.add('far');
-          slide.classList.add(offset < slidesData.length / 2 ? 'left' : 'right');
-        }
-      });
+  function handleEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    const diff = currentX - startX;
+    card.style.transition = 'transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    if (currentView === 'bio' && Math.abs(diff) > 100) {
+      card.classList.add(diff > 0 ? 'gone-right' : 'gone-left');
+    } else {
+      card.style.transform = '';
     }
+    document.querySelectorAll('.choice-btn').forEach(el => el.style.opacity = '0');
+  }
 
-    function moveCarousel(direction) {
-      currentIndex = (currentIndex + direction + slidesData.length) % slidesData.length;
-      updateCarousel();
-    }
-
-    setInterval(() => {
-      moveCarousel(1);
-    }, 4000);
-
-    createSlides();
-  </script>
+  card.addEventListener('touchstart', handleStart, { passive: true });
+  card.addEventListener('touchmove', handleMove, { passive: true });
+  card.addEventListener('touchend', handleEnd);
+  card.addEventListener('mousedown', handleStart);
+  window.addEventListener('mousemove', handleMove);
+  window.addEventListener('mouseup', handleEnd);
+</script>
 </body>
 </html>
