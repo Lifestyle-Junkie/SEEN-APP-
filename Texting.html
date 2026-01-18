@@ -140,7 +140,7 @@
       width: 100%;
       background-size: cover;
       background-position: center;
-      transition: height 0.35s ease;
+      transition: height 0.4s ease;
     }
     .messages .messages-content {
       position: absolute;
@@ -251,7 +251,7 @@
       background: rgba(0, 0, 0, 0.3);
       padding: 10px;
       position: relative;
-      transition: bottom 0.35s ease;
+      transition: all 0.35s ease;
     }
     .message-box .message-input {
       background: none;
@@ -423,46 +423,61 @@
       }, 1000 + (Math.random() * 20) * 100);
     }
 
-    // ── FIX: Message bar stays down / messages area shrinks when keyboard opens ──
+    // ── iPhone 17 Pro Optimized Keyboard Fix (2026 iOS) ───────────────────────────────
     const messageBox = document.querySelector('.message-box');
-    const messagesArea = document.querySelector('.messages');
+    const messages = document.querySelector('.messages');
     const messageInput = document.querySelector('.message-input');
 
-    let originalMessagesFlex = messagesArea.style.flex || '1 1 auto';
+    let originalMessagesHeight = null;
+    let lastKeyboardHeight = 0;
 
     function adjustForKeyboard() {
-      // Delay to let keyboard animation finish (critical on iOS)
-      setTimeout(() => {
-        const keyboardHeight = window.innerHeight - (window.visualViewport?.height || window.innerHeight);
+      if (!originalMessagesHeight) {
+        originalMessagesHeight = messages.style.height || 'auto';
+      }
 
-        if (keyboardHeight > 100) { // keyboard is open
-          // Shrink messages area so input bar stays visible at bottom
-          messagesArea.style.flex = `0 0 calc(100vh - ${keyboardHeight + messageBox.offsetHeight}px)`;
-          updateScrollbar();
-          // Force scroll to bottom
-          $messages.mCustomScrollbar('scrollTo', 'bottom', { scrollInertia: 0 });
+      // iPhone 17 Pro needs slightly longer delay for Dynamic Island + keyboard animation
+      setTimeout(() => {
+        const viewport = window.visualViewport;
+        const keyboardHeight = viewport ? (window.innerHeight - viewport.height) : 0;
+
+        // Add extra 2–4px buffer for iPhone 17 Pro safe areas + Dynamic Island
+        const safeBottom = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--safe-area-inset-bottom') || '0') + 4;
+
+        if (keyboardHeight > 150 && Math.abs(keyboardHeight - lastKeyboardHeight) > 20) {
+          lastKeyboardHeight = keyboardHeight;
+          // Shrink messages + account for safe area
+          messages.style.height = `calc(100vh - ${keyboardHeight + messageBox.offsetHeight + safeBottom}px)`;
+          messageBox.style.position = 'fixed';
+          messageBox.style.bottom = `${safeBottom}px`;
+          messageBox.style.left = '0';
+          messageBox.style.right = '0';
+          messageBox.style.zIndex = '10';
         } else {
-          // Restore normal layout when keyboard hides
-          messagesArea.style.flex = originalMessagesFlex;
-          updateScrollbar();
+          lastKeyboardHeight = 0;
+          messages.style.height = originalMessagesHeight;
+          messageBox.style.position = 'relative';
+          messageBox.style.bottom = '0';
         }
-      }, 120);
+
+        updateScrollbar();
+        $messages.mCustomScrollbar('scrollTo', 'bottom', { scrollInertia: 0 });
+      }, 180); // Longer delay for iPhone 17 Pro keyboard animation smoothness
     }
 
-    // Trigger when input is focused / blurred
+    // Events
     messageInput.addEventListener('focus', adjustForKeyboard);
     messageInput.addEventListener('blur', adjustForKeyboard);
 
-    // Also listen to viewport changes (very important on mobile)
-    window.addEventListener('resize', adjustForKeyboard);
+    // Critical for iOS 18+ on iPhone 17 Pro
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', adjustForKeyboard);
+      window.visualViewport.addEventListener('scroll', adjustForKeyboard);
     }
+    window.addEventListener('resize', adjustForKeyboard);
 
-    // Initial scroll to bottom on load
-    setTimeout(() => {
-      updateScrollbar();
-    }, 300);
+    // Initial setup
+    setTimeout(adjustForKeyboard, 500);
   </script>
 </body>
 </html>
