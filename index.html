@@ -25,7 +25,6 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
-
     .logo {
       position: absolute;
       top: 50%;
@@ -44,7 +43,6 @@
       pointer-events: none;
       line-height: 1;
     }
-
     .tagline {
       position: absolute;
       bottom: 40px;
@@ -56,7 +54,6 @@
       z-index: 2;
       pointer-events: none;
     }
-
     .carousel-container {
       position: relative;
       width: 90%;
@@ -67,7 +64,6 @@
       align-items: center;
       margin: 20px 0 10px;
     }
-
     .carousel {
       position: relative;
       width: 100%;
@@ -76,7 +72,6 @@
       justify-content: center;
       align-items: center;
     }
-
     .slide {
       position: absolute;
       width: 100%;
@@ -88,39 +83,33 @@
       padding: 2px;
       z-index: 5;
     }
-
     .slide.active {
       transform: scale(1.2) translateX(0);
       filter: none;
       opacity: 1;
       z-index: 15;
     }
-
     .slide.left {
       transform: scale(0.9) translateX(-180px);
       filter: grayscale(80%) blur(2px);
       opacity: 0.8;
       z-index: 10;
     }
-
     .slide.right {
       transform: scale(0.9) translateX(180px);
       filter: grayscale(80%) blur(2px);
       opacity: 0.8;
       z-index: 10;
     }
-
     .slide.far {
       transform: scale(0.7) translateX(-240px);
       filter: grayscale(100%) blur(4px);
       opacity: 0.6;
       z-index: 5;
     }
-
     .slide.far.right {
       transform: scale(0.7) translateX(240px);
     }
-
     .login-form {
       width: 90%;
       max-width: 350px;
@@ -128,13 +117,11 @@
       display: flex;
       flex-direction: column;
     }
-
     .form-control {
       position: relative;
       margin: 10px 0 20px;
       width: 100%;
     }
-
     .form-control input {
       background-color: transparent;
       border: 0;
@@ -145,20 +132,17 @@
       font-size: 14px;
       color: #fff;
     }
-
     .form-control input:focus,
     .form-control input:valid {
       outline: 0;
       border-bottom-color: var(--primary-purple);
     }
-
     .form-control label {
       position: absolute;
       top: 8px;
       left: 0;
       pointer-events: none;
     }
-
     .form-control label span {
       display: inline-block;
       font-size: 14px;
@@ -166,13 +150,11 @@
       color: #777;
       transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
-
     .form-control input:focus + label span,
     .form-control input:valid + label span {
       color: var(--primary-purple);
       transform: translateY(-20px);
     }
-
     .actions {
       display: flex;
       justify-content: space-between;
@@ -180,7 +162,6 @@
       gap: 12px;
       margin-bottom: 20px;
     }
-
     .btn {
       border: none;
       flex: 1;
@@ -195,9 +176,7 @@
       transition: all 450ms ease-in-out;
       border: 1px solid #222;
       padding: 0 15px;
-      text-decoration: none;
     }
-
     .btn:hover {
       background: var(--mythic-gradient);
       background-size: 200% 200%;
@@ -205,22 +184,17 @@
       box-shadow: 0 0 25px rgba(124, 58, 237, 0.6);
       transform: translateY(-2px);
     }
-
     @keyframes gradientMove {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
     .sparkle {
       fill: #888;
       width: 14px;
       height: 14px;
       flex-shrink: 0;
-      display: block;
-      transition: all 800ms ease;
     }
-
     .text {
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
@@ -228,18 +202,14 @@
       font-size: 10px;
       letter-spacing: 1px;
       transition: color 0.4s;
-      line-height: 1;
     }
-
     .btn:hover .sparkle {
       fill: #ffffff;
       transform: scale(1.2);
     }
-
     .btn:hover .text {
       color: #ffffff;
     }
-
     .forgot {
       font-size: 0.7rem;
       color: #a78bfa;
@@ -247,7 +217,6 @@
       margin-bottom: 10px;
       cursor: pointer;
     }
-
     .guest-link {
       text-align: center;
       text-decoration: none;
@@ -264,7 +233,6 @@
       width: fit-content;
       align-self: center;
     }
-
     .guest-link:hover {
       color: #fff;
       border-bottom-color: #c084fc;
@@ -272,7 +240,6 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-
     @media (max-width: 600px) {
       .carousel-container { height: 530px; }
       .slide { height: 480px; }
@@ -286,11 +253,9 @@
   </style>
 </head>
 <body>
-
   <div class="carousel-container">
     <div class="carousel"></div>
   </div>
-
   <form class="login-form">
     <div class="form-control">
       <input required type="text">
@@ -333,7 +298,7 @@
         <span class="text">REGISTER</span>
       </button>
     </div>
-    
+   
     <a href="discovery.html" class="guest-link">CONTINUE AS GUEST</a>
   </form>
 
@@ -343,32 +308,26 @@
       { image: 'Girlwithhat.png', tagline: 'Discover real energy. Real people.' },
       { image: 'Lightskin.png', tagline: 'She’s waiting. Will you swipe?' }
     ];
-
     const carousel = document.querySelector('.carousel');
     let currentIndex = 0;
-
     function createSlides() {
       carousel.innerHTML = '';
       slidesData.forEach((slide, index) => {
         const slideEl = document.createElement('div');
         slideEl.classList.add('slide');
         slideEl.style.backgroundImage = `url(${slide.image})`;
-
         const logoEl = document.createElement('div');
         logoEl.classList.add('logo');
         logoEl.textContent = 'SEEN';
-
         const tagEl = document.createElement('div');
         tagEl.classList.add('tagline');
         tagEl.textContent = slide.tagline;
-
         slideEl.appendChild(logoEl);
         slideEl.appendChild(tagEl);
         carousel.appendChild(slideEl);
       });
       updateCarousel();
     }
-
     function updateCarousel() {
       document.querySelectorAll('.slide').forEach((slide, i) => {
         const offset = (i - currentIndex + slidesData.length) % slidesData.length;
@@ -381,12 +340,10 @@
         }
       });
     }
-
     function moveCarousel(dir) {
       currentIndex = (currentIndex + dir + slidesData.length) % slidesData.length;
       updateCarousel();
     }
-
     setInterval(() => moveCarousel(1), 4000);
     createSlides();
   </script>
