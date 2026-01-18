@@ -16,7 +16,6 @@
       --mythic-cyan: #06b6d4;
       --mythic-gradient: linear-gradient(135deg, #7c3aed, #ec4899, #06b6d4, #7c3aed);
     }
-
     *, *::before, *::after {
       box-sizing: border-box;
     }
@@ -37,13 +36,11 @@
       justify-content: center;
       align-items: center;
     }
-
     @keyframes bgFlow {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
     .bg {
       width: 100%;
       height: 100%;
@@ -55,7 +52,6 @@
       transform: scale(1.2);
       position: absolute;
     }
-
     .chat {
       position: relative;
       width: 100vw;
@@ -72,7 +68,6 @@
     @media screen and (max-width: 450px) {
       .chat { border-radius: 0; }
     }
-
     .chat-title {
       flex: 0 1 45px;
       position: relative;
@@ -81,9 +76,9 @@
       color: #fff;
       text-transform: uppercase;
       text-align: left;
-      padding: 10px 10px 10px 80px; /* Adjusted for back button */
+      padding: 10px 10px 10px 80px;
     }
-    
+   
     /* Back Button Styling */
     .back-btn {
       position: absolute;
@@ -96,7 +91,6 @@
       z-index: 3;
       text-decoration: none;
     }
-
     .chat-title h1, .chat-title h2 {
       font-weight: normal;
       font-size: 10px;
@@ -112,7 +106,7 @@
       position: absolute;
       z-index: 1;
       top: 8px;
-      left: 42px; /* Adjusted for back button */
+      left: 42px;
       border-radius: 30px;
       width: 30px;
       height: 30px;
@@ -139,7 +133,6 @@
       color: var(--mythic-cyan);
       font-size: 14px;
     }
-
     .messages {
       flex: 1 1 auto;
       color: rgba(255, 255, 255, .5);
@@ -148,15 +141,15 @@
       width: 100%;
       background-size: cover;
       background-position: center;
+      transition: height 0.3s ease;
     }
     .messages .messages-content {
       position: absolute;
       top: 0;
       left: 0;
-      height: 101%;
+      height: 100%;
       width: 100%;
     }
-
     .message {
       clear: both;
       float: left;
@@ -202,7 +195,6 @@
       width: 100%;
       height: auto;
     }
-
     .message.message-personal {
       float: right;
       color: #fff;
@@ -231,7 +223,6 @@
       transform-origin: 0 0;
       animation: bounce 500ms linear both;
     }
-
     .message.loading span {
       display: block;
       font-size: 0;
@@ -255,13 +246,13 @@
     .message.loading::before { left: -7px; animation-delay: 0.15s; }
     .message.loading span::before { left: 0px; }
     .message.loading span::after { left: 7px; animation-delay: 0.3s; }
-
     .message-box {
       flex: 0 1 40px;
       width: 100%;
       background: rgba(0, 0, 0, 0.3);
       padding: 10px;
       position: relative;
+      transition: all 0.3s ease;
     }
     .message-box .message-input {
       background: none;
@@ -290,7 +281,6 @@
       border-radius: 10px;
       outline: none!important;
     }
-
     @keyframes bounce {
       0% { transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
       4.7% { transform: matrix3d(0.45, 0, 0, 0, 0, 0.45, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
@@ -299,17 +289,16 @@
     }
     @keyframes ball {
       from { transform: translateY(0) scaleY(.8); }
-      to   { transform: translateY(-10px); }
+      to { transform: translateY(-10px); }
     }
     @keyframes gradientMove {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
   </style>
 </head>
 <body>
-
   <div class="chat">
     <div class="chat-title">
       <a href="messages.html" class="back-btn"><i class="fas fa-chevron-left"></i></a>
@@ -332,7 +321,6 @@
       <button type="submit" class="message-submit">Send</button>
     </div>
   </div>
-
   <div class="bg"></div>
 
   <script>
@@ -340,22 +328,18 @@
     function goBack() {
       window.location.href = 'messages.html';
     }
-
     // Swipe Gesture Detection
     let touchstartX = 0;
     let touchendX = 0;
-    
+   
     document.addEventListener('touchstart', e => {
       touchstartX = e.changedTouches[0].screenX;
     });
-
     document.addEventListener('touchend', e => {
       touchendX = e.changedTouches[0].screenX;
       handleGesture();
     });
-
     function handleGesture() {
-      // Swipe Left detection (moves right to left)
       if (touchstartX - touchendX > 100) {
         goBack();
       }
@@ -365,13 +349,11 @@
     const urlParams = new URLSearchParams(window.location.search);
     const contactName = urlParams.get('name') || 'Unknown Contact';
     document.querySelector('.chat-title h1 label').textContent = contactName;
-
     const headerAvatar = document.querySelector('.chat-title .avatar img');
     if (headerAvatar) {
       headerAvatar.src = `https://i.pravatar.cc/150?u=${encodeURIComponent(contactName.toLowerCase())}`;
       headerAvatar.alt = contactName;
     }
-
     const contactAvatarUrl = `https://i.pravatar.cc/150?u=${encodeURIComponent(contactName.toLowerCase())}`;
 
     var $messages = $('.messages-content'),
@@ -428,22 +410,56 @@
 
     function fakeMessage() {
       if ($('.message-input').val() != '') return false;
-
       $('<div class="message loading new"><figure class="avatar"><img src="' + contactAvatarUrl + '" /></figure><span></span></div>')
         .appendTo($('.mCSB_container'));
-
       updateScrollbar();
-
       setTimeout(function() {
         $('.message.loading').remove();
         $('<div class="message new"><figure class="avatar"><img src="' + contactAvatarUrl + '" /></figure>' + Fake[i] + '</div>')
           .appendTo($('.mCSB_container'))
           .addClass('new');
-
         setDate();
         updateScrollbar();
         i++;
       }, 1000 + (Math.random() * 20) * 100);
+    }
+
+    // ── FIX: Message bar pushes up when keyboard opens ───────────────────────────────
+    const messageInput = document.querySelector('.message-input');
+    const messages = document.querySelector('.messages');
+    const messageBox = document.querySelector('.message-box');
+
+    let originalMessagesHeight = null;
+
+    function adjustLayoutForKeyboard() {
+      if (!originalMessagesHeight) {
+        originalMessagesHeight = messages.style.height || 'auto';
+      }
+
+      // Wait for keyboard animation (timing is important on iOS)
+      setTimeout(() => {
+        const keyboardHeight = window.innerHeight - (window.visualViewport?.height || window.innerHeight);
+
+        if (keyboardHeight > 100) { // keyboard is open
+          messages.style.height = `calc(100% - ${keyboardHeight + messageBox.offsetHeight}px)`;
+          updateScrollbar();
+          // Scroll to bottom
+          $messages.mCustomScrollbar('scrollTo', 'bottom', { scrollInertia: 100 });
+        } else {
+          messages.style.height = originalMessagesHeight;
+          updateScrollbar();
+        }
+      }, 150); // Slight delay for smooth keyboard animation
+    }
+
+    // Trigger on focus/blur
+    messageInput.addEventListener('focus', adjustLayoutForKeyboard);
+    messageInput.addEventListener('blur', adjustLayoutForKeyboard);
+
+    // Also handle resize (very important on iOS)
+    window.addEventListener('resize', adjustLayoutForKeyboard);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', adjustLayoutForKeyboard);
     }
   </script>
 </body>
