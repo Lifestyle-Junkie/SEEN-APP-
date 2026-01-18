@@ -25,7 +25,7 @@
       padding: 0;
     }
     body {
-      background: #000; /* Changed to solid black */
+      background: #000;
       font-family: 'Open Sans', sans-serif;
       font-size: 12px;
       line-height: 1.3;
@@ -40,16 +40,10 @@
       top: 0;
       left: 0;
       z-index: 1;
-      background: var(--mythic-gradient);
-      background-size: 300% 300%;
-      animation: bgFlow 12s ease infinite;
-      opacity: 0.15; /* Subtle overlay gradient on black */
+      background: url('https://images.unsplash.com/photo-1451186859696-371d9477be93?crop=entropy&fit=crop&fm=jpg&h=975&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1925') no-repeat 0 0;
+      filter: blur(80px);
+      transform: scale(1.2);
       position: absolute;
-    }
-    @keyframes bgFlow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
     }
     .chat {
       position: relative;
@@ -59,7 +53,7 @@
       z-index: 2;
       overflow: hidden;
       box-shadow: 0 5px 30px rgba(0, 0, 0, .2);
-      background: rgba(0, 0, 0, .8); /* Darker semi-transparent black */
+      background: rgba(0, 0, 0, .5);
       border-radius: 30px;
       display: flex;
       flex-direction: column;
@@ -152,7 +146,7 @@
       float: left;
       padding: 6px 10px 7px;
       border-radius: 10px 10px 10px 0;
-      background: rgba(124, 58, 237, 0.25);
+      background: rgba(0, 0, 0, .3); /* Restored original readable dark */
       margin: 8px 0;
       font-size: 11px;
       line-height: 1.4;
@@ -160,7 +154,6 @@
       position: relative;
       text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
       color: #fff;
-      border: 1px solid rgba(124, 58, 237, 0.3);
     }
     .message .timestamp {
       position: absolute;
@@ -168,11 +161,12 @@
       font-size: 9px;
       color: rgba(255, 255, 255, .3);
     }
+    /* Restored EXACT original tail style */
     .message::before {
       content: '';
       position: absolute;
       bottom: -6px;
-      border-top: 6px solid rgba(124, 58, 237, 0.25);
+      border-top: 6px solid rgba(0, 0, 0, .3);
       left: 0;
       border-right: 7px solid transparent;
     }
@@ -186,7 +180,7 @@
       height: 30px;
       overflow: hidden;
       margin: 0;
-      border: 2px solid rgba(124, 58, 237, 0.5);
+      border: 2px solid rgba(255, 255, 255, 0.24);
     }
     .message .avatar img {
       width: 100%;
@@ -202,8 +196,8 @@
       border-radius: 10px 10px 0 10px;
       margin-left: 0;
       margin-right: 8px;
-      border: none;
     }
+    /* Restored EXACT personal tail style */
     .message.message-personal::before {
       left: auto;
       right: 0;
@@ -244,38 +238,43 @@
     .message.loading span::before { left: 0px; }
     .message.loading span::after { left: 7px; animation-delay: 0.3s; }
     .message-box {
-      flex: 0 1 40px;
+      flex: 0 1 60px;
       width: 100%;
       background: rgba(0, 0, 0, 0.3);
-      padding: 10px;
+      padding: 12px 16px;
       position: relative;
+      display: flex;
+      align-items: center;
     }
     .message-box .message-input {
-      background: none;
-      border: none;
-      outline: none!important;
+      flex: 1;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(124, 58, 237, 0.3);
+      border-radius: 24px;
+      color: white;
+      font-size: 13px;
+      padding: 12px 20px;
+      outline: none;
+      height: 44px;
       resize: none;
-      color: rgba(255, 255, 255, .7);
-      font-size: 11px;
-      height: 17px;
-      margin: 0;
-      padding-right: 20px;
-      width: 80%;
+      line-height: 1.4;
     }
     .message-box .message-submit {
       position: absolute;
       z-index: 1;
-      top: 9px;
-      right: 10px;
+      top: 50%;
+      right: 24px;
+      transform: translateY(-50%);
       color: #fff;
       border: none;
       background: var(--mythic-purple);
-      font-size: 10px;
+      font-size: 12px;
       text-transform: uppercase;
       line-height: 1;
-      padding: 6px 10px;
-      border-radius: 10px;
+      padding: 8px 14px;
+      border-radius: 12px;
       outline: none!important;
+      cursor: pointer;
     }
     @keyframes bounce {
       0% { transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
@@ -320,15 +319,12 @@
   <div class="bg"></div>
 
   <script>
-    // Your existing script (unchanged)
-    // --- NAVIGATION LOGIC ---
+    // Your script (unchanged)
     function goBack() {
       window.location.href = 'messages.html';
     }
-    // Swipe Gesture Detection
     let touchstartX = 0;
     let touchendX = 0;
-   
     document.addEventListener('touchstart', e => {
       touchstartX = e.changedTouches[0].screenX;
     });
@@ -341,8 +337,6 @@
         goBack();
       }
     }
-
-    // Dynamic contact name & avatar
     const urlParams = new URLSearchParams(window.location.search);
     const contactName = urlParams.get('name') || 'Unknown Contact';
     document.querySelector('.chat-title h1 label').textContent = contactName;
