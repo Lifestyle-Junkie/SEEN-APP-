@@ -4,20 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Seen Login</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Poppins:wght@900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Poppins:wght@900&display=swap" rel="stylesheet">
   <style>
     :root {
       --mythic-gradient: linear-gradient(to right, #fff, #a78bfa, #c084fc);
       --primary-purple: #7c3aed;
     }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
     body {
-      background-color: #0f0f0f;
+      background-color: #000;
       color: #fff;
       display: flex;
       flex-direction: column;
@@ -26,64 +25,6 @@
       min-height: 100vh;
     }
 
-    .carousel-container {
-      position: relative;
-      width: 90%;
-      max-width: 350px;
-      height: 690px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 20px 0 10px;
-    }
-    .carousel {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .slide {
-      position: absolute;
-      width: 100%;
-      height: 640px;
-      border-radius: 20px;
-      background-size: cover;
-      background-position: center;
-      transition: transform 0.5s ease, filter 0.5s ease, opacity 0.5s ease;
-      padding: 2px;
-      z-index: 5;
-    }
-    .slide.active {
-      transform: scale(1.2) translateX(0);
-      filter: none;
-      opacity: 1;
-      z-index: 15;
-    }
-    .slide.left {
-      transform: scale(0.9) translateX(-180px);
-      filter: grayscale(80%) blur(2px);
-      opacity: 0.8;
-      z-index: 10;
-    }
-    .slide.right {
-      transform: scale(0.9) translateX(180px);
-      filter: grayscale(80%) blur(2px);
-      opacity: 0.8;
-      z-index: 10;
-    }
-    .slide.far {
-      transform: scale(0.7) translateX(-240px);
-      filter: grayscale(100%) blur(4px);
-      opacity: 0.6;
-      z-index: 5;
-    }
-    .slide.far.right {
-      transform: scale(0.7) translateX(240px);
-    }
-
-    /* SEEN logo – exact match from discover.html */
     .logo {
       position: absolute;
       top: 50%;
@@ -110,10 +51,73 @@
       transform: translateX(-50%);
       color: #ccc;
       font-size: 0.8rem;
-      font-family: 'Montserrat', 'Segoe UI', sans-serif;
       text-align: center;
       z-index: 2;
       pointer-events: none;
+    }
+
+    .carousel-container {
+      position: relative;
+      width: 90%;
+      max-width: 350px;
+      height: 690px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0 10px;
+    }
+
+    .carousel {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 640px;
+      border-radius: 20px;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.5s ease, filter 0.5s ease, opacity 0.5s ease;
+      padding: 2px;
+      z-index: 5;
+    }
+
+    .slide.active {
+      transform: scale(1.2) translateX(0);
+      filter: none;
+      opacity: 1;
+      z-index: 15;
+    }
+
+    .slide.left {
+      transform: scale(0.9) translateX(-180px);
+      filter: grayscale(80%) blur(2px);
+      opacity: 0.8;
+      z-index: 10;
+    }
+
+    .slide.right {
+      transform: scale(0.9) translateX(180px);
+      filter: grayscale(80%) blur(2px);
+      opacity: 0.8;
+      z-index: 10;
+    }
+
+    .slide.far {
+      transform: scale(0.7) translateX(-240px);
+      filter: grayscale(100%) blur(4px);
+      opacity: 0.6;
+      z-index: 5;
+    }
+
+    .slide.far.right {
+      transform: scale(0.7) translateX(240px);
     }
 
     .login-form {
@@ -121,132 +125,136 @@
       max-width: 350px;
       margin-top: 20px;
     }
+
     .form-control {
       position: relative;
       margin: 10px 0 20px;
       width: 100%;
     }
+
     .form-control input {
       background-color: transparent;
       border: 0;
-      border-bottom: 2px #fff solid;
+      border-bottom: 2px #333 solid;
       display: block;
       width: 100%;
       padding: 8px 0;
       font-size: 14px;
       color: #fff;
     }
+
     .form-control input:focus,
     .form-control input:valid {
       outline: 0;
       border-bottom-color: var(--primary-purple);
     }
+
     .form-control label {
       position: absolute;
       top: 8px;
       left: 0;
       pointer-events: none;
     }
+
     .form-control label span {
       display: inline-block;
       font-size: 14px;
       min-width: 5px;
-      color: #fff;
+      color: #777;
       transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
+
     .form-control input:focus + label span,
     .form-control input:valid + label span {
       color: var(--primary-purple);
       transform: translateY(-20px);
     }
-    .login-form .actions {
+
+    .actions {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 1rem;
+      gap: 10px;           /* ← original spacing */
     }
+
     .btn {
       border: none;
       width: 7em;
-      height: 2.5em;
+      height: 2.8em;        /* ← original height */
       border-radius: 3em;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
-      background: #1C1A1C;
+      gap: 8px;             /* ← original gap between star and text */
+      background: #111;     /* ← original dark background */
       cursor: pointer;
       transition: all 450ms ease-in-out;
-      background: var(--mythic-gradient);
-      background-size: 200% 200%;
-      animation: gradientMove 8s ease infinite;
-    }
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    .sparkle {
-      fill: #ffffff;
-      transition: all 800ms ease;
-    }
-    .text {
-      font-weight: 600;
-      color: #ffffff;
-      font-size: x-small;
-    }
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 25px rgba(124, 58, 237, 0.5);
-    }
-    .forgot {
-      font-size: 0.7rem;
-      color: #888;
-      text-align: right;
-      margin-bottom: 5px;
+      border: 1px solid #222;
     }
 
-    /* Guest button */
-    .guest-btn {
-      background: transparent;
-      border: 1px solid var(--primary-purple);
-      color: var(--primary-purple);
-      padding: 0.9rem 2rem;
-      border-radius: 2rem;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 1.5rem;
-      width: 100%;
-      max-width: 300px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
+    .btn:hover {
+      background: var(--mythic-gradient);
+      background-size: 200% 200%;
+      animation: gradientMove 4s ease infinite;
+      box-shadow: 0 0 25px rgba(124, 58, 237, 0.6);
+      transform: translateY(-2px);
     }
-    .guest-btn:hover {
-      background: rgba(124, 58, 237, 0.15);
-      border-color: #ec4899;
-      color: #fff;
-      box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+
+    @keyframes gradientMove {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .sparkle {
+      fill: #888;           /* ← gray like original */
+      width: 14px;          /* ← original size */
+      height: 14px;
+      transition: all 800ms ease;
+    }
+
+    .text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;     /* ← original weight */
+      color: #888;          /* ← gray like original */
+      font-size: 10px;      /* ← original size */
+      letter-spacing: 1px;
+      transition: color 0.4s;
+    }
+
+    .btn:hover .sparkle {
+      fill: #ffffff;
+      transform: scale(1.2);
+    }
+
+    .btn:hover .text {
+      color: #ffffff;
+    }
+
+    .forgot {
+      font-size: 0.7rem;
+      color: #a78bfa;
+      text-align: right;
+      margin-bottom: 10px;
+      cursor: pointer;
     }
 
     @media (max-width: 600px) {
       .carousel-container { height: 530px; }
-      .slide { height: 480px; padding: 2px; }
+      .slide { height: 480px; }
       .slide.active { transform: scale(1.1) translateX(0); }
       .slide.left { transform: scale(0.8) translateX(-130px); }
       .slide.right { transform: scale(0.8) translateX(130px); }
       .slide.far { transform: scale(0.6) translateX(-160px); }
       .slide.far.right { transform: scale(0.6) translateX(160px); }
+      .logo { font-size: 3.2rem; }
     }
   </style>
 </head>
 <body>
+
   <div class="carousel-container">
-    <div class="carousel">
-      <!-- Slides will be injected here -->
-    </div>
+    <div class="carousel"></div>
   </div>
 
   <form class="login-form">
@@ -277,33 +285,27 @@
       </label>
     </div>
     <div class="forgot">Forgot password?</div>
-
     <div class="actions">
       <button type="submit" class="btn">
-        <svg height="16" width="16" fill="#FFFFFF" viewBox="0 0 24 24" class="sparkle">
+        <svg class="sparkle" viewBox="0 0 24 24">
           <path d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245Z"/>
         </svg>
         <span class="text">LOGIN</span>
       </button>
       <button type="button" class="btn">
-        <svg height="16" width="16" fill="#FFFFFF" viewBox="0 0 24 24" class="sparkle">
+        <svg class="sparkle" viewBox="0 0 24 24">
           <path d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245Z"/>
         </svg>
         <span class="text">REGISTER</span>
       </button>
     </div>
-
-    <!-- Continue as Guest -->
-    <button type="button" class="guest-btn" onclick="window.location.href='discover.html'">
-      Continue as Guest
-    </button>
   </form>
 
   <script>
     const slidesData = [
-      { image: 'gamergirl.png', label: 'Gamer Girl', logo: 'seen', tagline: 'Find gothically inclined people near you.' },
-      { image: 'Girlwithhat.png', label: 'Girl with Hat', logo: 'seen', tagline: 'Discover real energy. Real people.' },
-      { image: 'Lightskin.png', label: 'Lightskin', logo: 'seen', tagline: 'She’s waiting. Will you swipe?' }
+      { image: 'gamergirl.png', tagline: 'Find gothically inclined people near you.' },
+      { image: 'Girlwithhat.png', tagline: 'Discover real energy. Real people.' },
+      { image: 'Lightskin.png', tagline: 'She’s waiting. Will you swipe?' }
     ];
 
     const carousel = document.querySelector('.carousel');
@@ -312,51 +314,44 @@
     function createSlides() {
       carousel.innerHTML = '';
       slidesData.forEach((slide, index) => {
-        const slideElement = document.createElement('div');
-        slideElement.classList.add('slide');
-        slideElement.style.backgroundImage = `url(${slide.image})`;
-        slideElement.dataset.index = index;
+        const slideEl = document.createElement('div');
+        slideEl.classList.add('slide');
+        slideEl.style.backgroundImage = `url(${slide.image})`;
 
-        const logoElement = document.createElement('div');
-        logoElement.classList.add('logo');
-        logoElement.textContent = slide.logo.toUpperCase();
+        const logoEl = document.createElement('div');
+        logoEl.classList.add('logo');
+        logoEl.textContent = 'SEEN';
 
-        const taglineElement = document.createElement('div');
-        taglineElement.classList.add('tagline');
-        taglineElement.textContent = slide.tagline;
+        const tagEl = document.createElement('div');
+        tagEl.classList.add('tagline');
+        tagEl.textContent = slide.tagline;
 
-        slideElement.appendChild(logoElement);
-        slideElement.appendChild(taglineElement);
-        carousel.appendChild(slideElement);
+        slideEl.appendChild(logoEl);
+        slideEl.appendChild(tagEl);
+        carousel.appendChild(slideEl);
       });
       updateCarousel();
     }
 
     function updateCarousel() {
-      const slides = document.querySelectorAll('.slide');
-      slides.forEach((slide, index) => {
-        const offset = ((index - currentIndex + slidesData.length) % slidesData.length);
+      document.querySelectorAll('.slide').forEach((slide, i) => {
+        const offset = (i - currentIndex + slidesData.length) % slidesData.length;
         slide.className = 'slide';
-        if (offset === 0) {
-          slide.classList.add('active');
-        } else if (offset === 1 || offset === slidesData.length - 1) {
+        if (offset === 0) slide.classList.add('active');
+        else if (offset === 1 || offset === slidesData.length - 1) {
           slide.classList.add(offset === 1 ? 'right' : 'left');
         } else {
-          slide.classList.add('far');
-          slide.classList.add(offset < slidesData.length / 2 ? 'left' : 'right');
+          slide.classList.add('far', offset < slidesData.length / 2 ? 'left' : 'right');
         }
       });
     }
 
-    function moveCarousel(direction) {
-      currentIndex = (currentIndex + direction + slidesData.length) % slidesData.length;
+    function moveCarousel(dir) {
+      currentIndex = (currentIndex + dir + slidesData.length) % slidesData.length;
       updateCarousel();
     }
 
-    setInterval(() => {
-      moveCarousel(1);
-    }, 4000);
-
+    setInterval(() => moveCarousel(1), 4000);
     createSlides();
   </script>
 </body>
