@@ -244,27 +244,39 @@
     .message.loading span::before { left: 0px; }
     .message.loading span::after { left: 7px; animation-delay: 0.3s; }
 
-    /* ── Even bigger input area ── */
+    /* ── Updated message bar with color ── */
     .message-box {
       flex: 0 1 96px;
       width: 100%;
-      background: rgba(0, 0, 0, 0.3);
+      background: linear-gradient(to top, rgba(124,58,237,0.22), rgba(124,58,237,0.08));
+      border-top: 1px solid rgba(124, 58, 237, 0.45);
+      box-shadow: 0 -4px 20px rgba(124, 58, 237, 0.18);
       padding: 16px 10px;
       position: relative;
     }
+
     .message-box .message-input {
-      background: none;
-      border: none;
+      background: rgba(30, 25, 50, 0.65);
+      border: 1px solid rgba(124, 58, 237, 0.35);
+      border-radius: 18px;
       outline: none!important;
       resize: none;
-      color: rgba(255, 255, 255, .85);
+      color: rgba(240, 240, 255, 0.95);
       font-size: 15px;
       line-height: 1.5;
       height: 64px;
       margin: 0;
-      padding: 14px 68px 14px 16px;
+      padding: 14px 68px 14px 18px;
       width: 100%;
+      transition: all 0.2s ease;
     }
+
+    .message-box .message-input:focus {
+      border-color: var(--mythic-purple);
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.25);
+      background: rgba(35, 30, 60, 0.8);
+    }
+
     .message-box .message-submit {
       position: absolute;
       z-index: 1;
@@ -280,6 +292,12 @@
       padding: 10px 18px;
       border-radius: 14px;
       outline: none!important;
+      transition: all 0.2s;
+    }
+
+    .message-box .message-submit:hover {
+      background: var(--mythic-pink);
+      transform: translateY(-50%) scale(1.05);
     }
 
     @keyframes bounce {
