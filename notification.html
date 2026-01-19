@@ -82,6 +82,7 @@
       align-items: center;
       gap: 14px;
       backdrop-filter: blur(6px);
+      transition: all 0.3s ease;
     }
     .notif-avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(167,139,250,0.4); flex-shrink: 0; }
     .notif-content { flex: 1; min-width: 0; }
@@ -90,7 +91,6 @@
     .notif-time { font-size: 0.75rem; color: #777; margin-top: 4px; }
     .action-pill { padding: 6px 14px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; white-space: nowrap; flex-shrink: 0; cursor: pointer; }
     .liked { background: var(--clr-green); color: black; }
-    .noped { background: var(--clr-red); color: white; }
     .request { background: #a78bfa; color: white; }
     .nav-bar {
       position: fixed;
@@ -124,7 +124,7 @@
 <div class="content">
   <div class="section-title">Recent Activity</div>
 
-  <div class="notif-card" data-id="ava">
+  <div class="notif-card">
     <img src="https://i.pravatar.cc/150?u=ava" class="notif-avatar">
     <div class="notif-content">
       <div class="notif-name">Ava</div>
@@ -134,14 +134,14 @@
     <div class="action-pill liked">LIKED</div>
   </div>
 
-  <div class="notif-card" data-id="leo">
-    <img src="https://i.pravatar.cc/150?u=leo" class="notif-avatar">
+  <div class="notif-card" data-id="mia">
+    <img src="https://i.pravatar.cc/150?u=mia" class="notif-avatar">
     <div class="notif-content">
-      <div class="notif-name">Leo</div>
+      <div class="notif-name">Mia</div>
       <div class="notif-text">wants to chat</div>
       <div class="notif-time">2h ago</div>
     </div>
-    <div class="action-pill request" onclick="acceptRequest('Leo', 'leo', 'Hey! Saw you\'re into journalism too — let\'s talk?')">Approve</div>
+    <div class="action-pill request" onclick="acceptRequest('Mia', 'mia', 'Hey cutie, let\'s talk')">Approve</div>
   </div>
 </div>
 
@@ -155,30 +155,22 @@
 </nav>
 
 <script>
-  // --- SWIPE GESTURE LOGIC ---
+  // Swipe back to discover
   let touchstartX = 0;
   let touchendX = 0;
-  window.addEventListener('touchstart', e => {
-    touchstartX = e.changedTouches[0].screenX;
-  }, false);
+  window.addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; }, false);
   window.addEventListener('touchend', e => {
     touchendX = e.changedTouches[0].screenX;
-    handleGesture();
+    if (touchendX > touchstartX + 100) window.location.href = 'discover.html';
   }, false);
-  function handleGesture() {
-    if (touchendX > touchstartX + 100) {
-      window.location.href = 'discover.html';
-    }
-  }
 
-  // --- ACCEPT REQUEST FUNCTION ---
+  // Accept request → save to localStorage + remove card (NO redirect)
   function acceptRequest(name, avatarId, previewMsg = "New connection! Say hi 👋") {
     let chats = JSON.parse(localStorage.getItem('seen_chats') || '[]');
-
-    const exists = chats.some(chat => chat.name === name);
+    const exists = chats.some(c => c.name === name);
     if (!exists) {
       chats.unshift({
-        name: name,
+        name,
         avatar: `https://i.pravatar.cc/150?u=${avatarId}`,
         preview: previewMsg,
         href: `Texting.html?name=${encodeURIComponent(name)}`
@@ -186,17 +178,13 @@
       localStorage.setItem('seen_chats', JSON.stringify(chats));
     }
 
-    // Remove the card from DOM
+    // Remove card with smooth fade
     const card = document.querySelector(`.notif-card[data-id="${avatarId}"]`);
     if (card) {
+      card.style.transition = 'opacity 0.3s ease';
       card.style.opacity = '0';
       setTimeout(() => card.remove(), 300);
     }
-
-    // Redirect to messages
-    setTimeout(() => {
-      window.location.href = 'messages.html';
-    }, 400);
   }
 </script>
 </body>
