@@ -9,92 +9,37 @@
   <style>
     :root {
       --bg: #000;
-      --clr-purple: #7c3aed;
-      --clr-pink: #ec4899;
-      --clr-cyan: #06b6d4;
       --mythic-gradient: linear-gradient(135deg, #7c3aed, #ec4899, #06b6d4, #7c3aed);
     }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      background: #000;
-      color: #fff;
-      font-family: 'Poppins', sans-serif;
-      height: 100dvh;
-      overflow: hidden;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #000; color: #fff; font-family: 'Poppins', sans-serif; height: 100dvh; overflow: hidden; }
+   
     .app-container {
-      position: relative;
-      width: 100%;
-      max-width: 430px;
-      height: 100dvh;
-      margin: 0 auto;
-      background: #000;
-      display: flex;
-      flex-direction: column;
+      position: relative; width: 100%; max-width: 430px; height: 100dvh;
+      margin: 0 auto; background: #000; display: flex; flex-direction: column;
     }
     .dynamic-island {
-      position: absolute;
-      top: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 120px;
-      height: 35px;
-      background: #000;
-      border-radius: 20px;
-      z-index: 3000;
+      position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+      width: 120px; height: 35px; background: #000; border-radius: 20px; z-index: 3000;
     }
-    .logo-text {
-      font-weight: 900;
-      font-size: 1.4rem;
-      letter-spacing: 4px;
-      background: linear-gradient(to right, #fff, #a78bfa, #c084fc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-transform: uppercase;
-    }
-    .content {
-      flex: 1;
-      padding: 1.5rem;
-      padding-top: 70px;
-      overflow-y: auto;
-      background: #000;
-      padding-bottom: 110px;
-    }
+    .content { flex: 1; padding: 1.5rem; padding-top: 70px; overflow-y: auto; padding-bottom: 110px; }
     .content::-webkit-scrollbar { display: none; }
-    .header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
+    .logo-text { font-weight: 900; font-size: 1.4rem; letter-spacing: 4px; background: linear-gradient(to right, #fff, #a78bfa, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
+    .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .filter-btn { color: #a78bfa; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; cursor: pointer; position: relative; }
+   
+    /* Request Badge Styling */
+    #requestBadge {
+      position: absolute; top: -8px; right: -12px;
+      background: #ff453a; color: white; font-size: 10px;
+      width: 18px; height: 18px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid #000;
     }
-    .search-bar {
-      display: flex;
-      align-items: center;
-      background: rgba(255,255,255,0.08);
-      padding: 0.8rem 1.2rem;
-      border-radius: 18px;
-      margin-bottom: 1.5rem;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-    .search-bar input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      color: #fff;
-      font-size: 1rem;
-      outline: none;
-    }
-    .filter-btn {
-      color: #a78bfa;
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+    .delete-btn { color: #ff453a; font-weight: 700; display: none; cursor: pointer; font-size: 0.9rem; }
+    .search-bar { display: flex; align-items: center; background: rgba(255,255,255,0.08); padding: 0.8rem 1.2rem; border-radius: 18px; margin-bottom: 1.5rem; border: 1px solid rgba(255,255,255,0.05); }
+    .search-bar input { flex: 1; background: transparent; border: none; color: #fff; outline: none; font-size: 1rem; }
+
     .chat-tile {
       position: relative;
       padding: 1.5px;
@@ -103,193 +48,181 @@
       background: var(--mythic-gradient);
       background-size: 200% 200%;
       animation: gradientMove 4s ease infinite;
-      display: block;
-      text-decoration: none;
-      color: inherit;
+      cursor: pointer;
+      transition: 0.3s;
+      overflow: hidden;
     }
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+    @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+   
     .chat-tile-inner {
       border-radius: 23px;
       background: #000;
-      padding: 1.1rem;
+      padding: 1rem;                      /* slightly reduced for mobile safety */
       display: flex;
       align-items: center;
+      width: 100%;
+      overflow: hidden;
     }
-    .chat-tile.read .chat-preview { color: #555; }
-    .chat-tile.read .chat-name { color: #ccc; }
-    .avatar-wrapper {
-      position: relative;
-      margin-right: 1.1rem;
-    }
-    .avatar {
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #000;
-    }
-    .online-indicator {
-      position: absolute;
-      bottom: 2px;
-      right: 2px;
-      width: 14px;
-      height: 14px;
-      background: #63ff68;
-      border: 3px solid #000;
-      border-radius: 50%;
-    }
+    .avatar { width: 58px; height: 58px; border-radius: 50%; border: 2px solid #000; margin-right: 1rem; flex-shrink: 0; }
+    .chat-name { font-weight: 700; font-size: 1.05rem; margin: 0 0 4px 0; }
+    .chat-preview { font-size: 0.9rem; color: #aaa; }
+
     .chat-info {
       flex: 1;
       min-width: 0;
+      overflow: hidden;
     }
-    .chat-name {
-      font-weight: 700;
-      font-size: 1.05rem;
-      margin-bottom: 2px;
-      color: #fff;
-    }
-    .chat-preview {
-      font-size: 0.9rem;
-      color: #fff;
-      white-space: nowrap;
+    .chat-name, .chat-preview {
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
+      display: block;
+      word-break: break-all;              /* strong fallback for very long words/URLs */
+      hyphens: auto;
     }
-    .timestamp {
-      font-size: 0.75rem;
-      color: #666;
-      font-weight: 600;
-      margin-left: 8px;
+
+    #requestOverlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: #000; z-index: 2000; display: none; flex-direction: column; padding: 1.5rem; padding-top: 70px;
     }
-    .nav-bar {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 90px;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(20px);
+    .request-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      padding: 1rem;                      /* reduced padding helps on narrow screens */
+      margin-bottom: 1rem;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      border-top: 1px solid rgba(255,255,255,0.1);
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: opacity 0.3s ease;
+      overflow: hidden;                   /* ← key fix for request cards */
+      gap: 12px;
+    }
+    .request-card .flex.items-center {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .request-card .font-bold,
+    .request-card .text-xs {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      word-break: break-all;
+      hyphens: auto;
+    }
+    .action-btn { 
+      padding: 6px 12px; 
+      border-radius: 12px; 
+      font-weight: 600; 
+      font-size: 0.8rem; 
+      cursor: pointer; 
+      flex-shrink: 0; 
+    }
+    .approve { background: #a78bfa; color: #fff; }
+    .deny { background: #333; color: #ff453a; }
+    .selection-circle { width: 0; height: 24px; border: 2px solid #333; border-radius: 50%; margin-right: 0; opacity: 0; transition: 0.2s; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .is-editing .selection-circle { width: 24px; margin-right: 12px; opacity: 1; }
+    .selected .selection-circle { background: #a78bfa; border-color: #a78bfa; }
+    .selected .selection-circle::after { content: '✓'; color: white; font-size: 12px; }
+
+    .nav-bar {
+      position: absolute; bottom: 0; width: 100%; height: 90px;
+      background: rgba(0,0,0,0.85); backdrop-filter: blur(20px);
+      display: flex; flex-direction: column;
+      justify-content: center; border-top: 1px solid rgba(255,255,255,0.1);
       padding-bottom: env(safe-area-inset-bottom);
     }
-    .button-row {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      width: 100%;
-      flex: 1;
-    }
-    .home-indicator {
-      width: 134px;
-      height: 5px;
-      background: #fff;
-      border-radius: 100px;
-      margin: 8px auto;
-      opacity: 0.3;
-    }
+    .button-row { display: flex; justify-content: space-around; align-items: center; width: 100%; flex: 1; }
+    .home-indicator { width: 134px; height: 5px; background: #fff; border-radius: 100px; margin: 8px auto; opacity: 0.3; }
     .nav-btn {
-      background: none;
-      border: none;
-      padding: 0;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: transform 0.12s ease, color 0.2s;
-      text-decoration: none;
-      color: #fff;
+      background: none; border: none; padding: 0;
+      width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: transform 0.12s ease, color 0.2s;
+      text-decoration: none; color: #fff;
     }
     .nav-btn:hover { color: #a78bfa; }
     .nav-btn:active { transform: scale(0.92); }
     .nav-btn.active { color: #a78bfa; }
-    .nav-btn .icon {
-      width: 26px;
-      height: 26px;
+    .nav-btn .icon { width: 26px; height: 26px; }
+
+    /* Mobile safety adjustments */
+    @media (max-width: 430px) {
+      .chat-tile-inner { padding: 0.9rem; }
+      .chat-preview { font-size: 0.85rem; }
+      .chat-name { font-size: 1rem; }
+      .request-card { padding: 0.9rem; font-size: 0.95rem; }
+      .request-card .action-btn { padding: 5px 10px; font-size: 0.75rem; }
     }
   </style>
 </head>
 <body>
-  <div class="app-container">
+  <div class="app-container" id="app">
     <div class="dynamic-island"></div>
 
-    <div class="content">
+    <div class="content" id="mainContent">
       <div class="header-row">
-        <span class="logo-text">Seen</span>
+        <span class="logo-text" id="headerLogo">Seen</span>
+        <span class="delete-btn" id="deleteBtn">Delete</span>
         <div class="flex gap-5">
-          <span class="filter-btn">Edit</span>
-          <span class="filter-btn">Requests</span>
+          <span class="filter-btn" id="editToggle">Edit</span>
+          <span class="filter-btn" onclick="toggleRequests(true)">
+            Requests
+            <div id="requestBadge">2</div>
+          </span>
         </div>
       </div>
-
       <div class="search-bar">
-        <svg class="w-5 h-5 text-gray-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-        </svg>
         <input type="text" id="searchInput" placeholder="Search" />
       </div>
-
-      <!-- Now clickable with name parameter -->
-      <a href="Texting.html?name=Ella" class="chat-tile">
-        <div class="chat-tile-inner">
-          <div class="avatar-wrapper">
-            <img class="avatar" src="https://i.pravatar.cc/150?u=ella" alt="Ella">
-            <div class="online-indicator"></div>
+      <div id="tileWrapper">
+        <div data-href="Texting.html?name=Ella" class="chat-tile">
+          <div class="chat-tile-inner">
+            <div class="selection-circle"></div>
+            <img class="avatar" src="https://i.pravatar.cc/150?u=ella">
+            <div class="chat-info">
+              <div class="chat-name">EllaWithAVeryLongNameThatShouldNotBreakTheBubbleOnMobile</div>
+              <div class="chat-preview">This is a super long preview message to test overflow behavior on small mobile screens without escaping the rounded card</div>
+            </div>
           </div>
-          <div class="chat-info">
-            <div class="chat-name">Ella</div>
-            <div class="chat-preview font-medium">Rethinking the gym today...</div>
-          </div>
-          <div class="timestamp">7:04 PM</div>
         </div>
-      </a>
+      </div>
+    </div>
 
-      <a href="Texting.html?name=Mia" class="chat-tile read">
-        <div class="chat-tile-inner">
-          <div class="avatar-wrapper">
-            <img class="avatar" src="https://i.pravatar.cc/150?u=mia" alt="Mia">
+    <div id="requestOverlay">
+      <div class="header-row">
+        <span class="logo-text">Requests</span>
+        <span class="filter-btn" onclick="toggleRequests(false)">Done</span>
+      </div>
+     
+      <div id="requestList">
+        <div class="request-card" id="req-leo">
+          <div class="flex items-center min-w-0 overflow-hidden">
+            <img class="avatar" src="https://i.pravatar.cc/150?u=leo" style="width: 45px; height: 45px; flex-shrink: 0;">
+            <div class="min-w-0 overflow-hidden">
+              <div class="font-bold">LeoWithAVeryLongNameThatTestsTheLimits</div>
+              <div class="text-xs text-gray-400">Wants to chat – this description is intentionally long to verify containment</div>
+            </div>
           </div>
-          <div class="chat-info">
-            <div class="chat-name">Mia</div>
-            <div class="chat-preview">Message Send Failure</div>
+          <div class="flex gap-2 flex-shrink-0">
+            <button class="action-btn deny" onclick="handleRequest('leo', 'deny')">Deny</button>
+            <button class="action-btn approve" onclick="handleRequest('leo', 'approve', 'Leo', 'Hey, let\'s catch up!')">Approve</button>
           </div>
-          <div class="timestamp">5:31 PM</div>
         </div>
-      </a>
-
-      <a href="Texting.html?name=Sophia" class="chat-tile read">
-        <div class="chat-tile-inner">
-          <div class="avatar-wrapper">
-            <img class="avatar" src="https://i.pravatar.cc/150?u=sophia" alt="Sophia">
+        <div class="request-card" id="req-lily">
+          <div class="flex items-center min-w-0 overflow-hidden">
+            <img class="avatar" src="https://i.pravatar.cc/150?u=lily" style="width: 45px; height: 45px; flex-shrink: 0;">
+            <div class="min-w-0 overflow-hidden">
+              <div class="font-bold">LilySuperLongNameForTestingMobileBubbleFit</div>
+              <div class="text-xs text-gray-400">Wants to chat – another very long line to make sure nothing overflows</div>
+            </div>
           </div>
-          <div class="chat-info">
-            <div class="chat-name">Sophia</div>
-            <div class="chat-preview">Loved that coffee spot!</div>
+          <div class="flex gap-2 flex-shrink-0">
+            <button class="action-btn deny" onclick="handleRequest('lily', 'deny')">Deny</button>
+            <button class="action-btn approve" onclick="handleRequest('lily', 'approve', 'Lily', 'Did you see the news?')">Approve</button>
           </div>
-          <div class="timestamp">3:15 PM</div>
         </div>
-      </a>
-
-      <a href="Texting.html?name=Ava" class="chat-tile">
-        <div class="chat-tile-inner">
-          <div class="avatar-wrapper">
-            <img class="avatar" src="https://i.pravatar.cc/150?u=ava" alt="Ava">
-            <div class="online-indicator"></div>
-          </div>
-          <div class="chat-info">
-            <div class="chat-name">Ava</div>
-            <div class="chat-preview font-medium">At work talk 2 u later</div>
-          </div>
-          <div class="timestamp">3:01 PM</div>
-        </div>
-      </a>
+      </div>
     </div>
 
     <nav class="nav-bar">
@@ -322,11 +255,77 @@
   </div>
 
   <script>
-    document.getElementById('searchInput').addEventListener('input', function(e) {
+    const editToggle = document.getElementById('editToggle');
+    const deleteBtn = document.getElementById('deleteBtn');
+    const headerLogo = document.getElementById('headerLogo');
+    const app = document.getElementById('app');
+    const tileWrapper = document.getElementById('tileWrapper');
+    const requestBadge = document.getElementById('requestBadge');
+    let isEditing = false;
+
+    function updateBadge() {
+      const count = document.querySelectorAll('.request-card').length;
+      requestBadge.textContent = count;
+      requestBadge.style.display = count > 0 ? 'flex' : 'none';
+    }
+    updateBadge();
+
+    editToggle.addEventListener('click', () => {
+      isEditing = !isEditing;
+      app.classList.toggle('is-editing', isEditing);
+      editToggle.textContent = isEditing ? 'Cancel' : 'Edit';
+      headerLogo.style.display = isEditing ? 'none' : 'block';
+      deleteBtn.style.display = isEditing ? 'block' : 'none';
+    });
+
+    document.addEventListener('click', (e) => {
+      const tile = e.target.closest('.chat-tile');
+      if (tile) {
+        if (isEditing) tile.classList.toggle('selected');
+        else window.location.href = tile.getAttribute('data-href');
+      }
+    });
+
+    deleteBtn.addEventListener('click', () => {
+      document.querySelectorAll('.chat-tile.selected').forEach(t => t.remove());
+      editToggle.click();
+    });
+
+    function toggleRequests(show) {
+      document.getElementById('requestOverlay').style.display = show ? 'flex' : 'none';
+    }
+
+    function handleRequest(id, action, name, msg) {
+      const card = document.getElementById('req-' + id);
+      card.style.opacity = '0';
+      setTimeout(() => {
+        card.remove();
+        updateBadge();
+        if (action === 'approve') {
+          const newTile = document.createElement('div');
+          newTile.className = 'chat-tile';
+          newTile.setAttribute('data-href', `Texting.html?name=${name}`);
+          newTile.innerHTML = `
+            <div class="chat-tile-inner">
+              <div class="selection-circle"></div>
+              <img class="avatar" src="https://i.pravatar.cc/150?u=${id}">
+              <div class="chat-info">
+                <div class="chat-name">${name}</div>
+                <div class="chat-preview">${msg}</div>
+              </div>
+            </div>
+          `;
+          tileWrapper.prepend(newTile);
+          toggleRequests(false);
+        }
+      }, 300);
+    }
+
+    document.getElementById('searchInput').addEventListener('input', (e) => {
       const term = e.target.value.toLowerCase();
       document.querySelectorAll('.chat-tile').forEach(tile => {
-        const name = tile.querySelector('.chat-name').textContent.toLowerCase();
-        tile.style.display = name.includes(term) ? 'block' : 'none';
+        const name = tile.querySelector('.chat-name')?.textContent.toLowerCase() || '';
+        tile.style.display = name.includes(term) ? '' : 'none';
       });
     });
   </script>
