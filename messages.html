@@ -28,6 +28,7 @@
     .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
     .filter-btn { color: #a78bfa; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; cursor: pointer; position: relative; }
   
+    /* Request Badge Styling */
     #requestBadge {
       position: absolute; top: -8px; right: -12px;
       background: #ff453a; color: white; font-size: 10px;
@@ -140,6 +141,7 @@
     .nav-btn:active { transform: scale(0.92); }
     .nav-btn.active { color: #a78bfa; }
     .nav-btn .icon { width: 26px; height: 26px; }
+    /* Mobile safety adjustments */
     @media (max-width: 430px) {
       .chat-tile-inner { padding: 0.9rem; }
       .chat-preview { font-size: 0.85rem; }
@@ -246,10 +248,10 @@
 
   <script>
     // ──────────────────────────────────────────────
-    // Load chats from localStorage
+    // Load chats from sessionStorage (resets on refresh / tab close)
     // ──────────────────────────────────────────────
     function loadSavedChats() {
-      const savedChats = JSON.parse(localStorage.getItem('seen_chats') || '[]');
+      const savedChats = JSON.parse(sessionStorage.getItem('seen_chats') || '[]');
       const tileWrapper = document.getElementById('tileWrapper');
 
       savedChats.forEach(chat => {
@@ -276,7 +278,7 @@
     window.addEventListener('DOMContentLoaded', loadSavedChats);
 
     // ──────────────────────────────────────────────
-    // Your original script continues here...
+    // Original messages script below (unchanged)
     // ──────────────────────────────────────────────
     const editToggle = document.getElementById('editToggle');
     const deleteBtn = document.getElementById('deleteBtn');
