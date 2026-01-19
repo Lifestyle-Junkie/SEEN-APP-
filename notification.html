@@ -164,9 +164,9 @@
     if (touchendX > touchstartX + 100) window.location.href = 'discover.html';
   }, false);
 
-  // Accept request → save to localStorage + remove card (NO redirect)
+  // Accept request → save to sessionStorage + remove card (no redirect)
   function acceptRequest(name, avatarId, previewMsg = "New connection! Say hi 👋") {
-    let chats = JSON.parse(localStorage.getItem('seen_chats') || '[]');
+    let chats = JSON.parse(sessionStorage.getItem('seen_chats') || '[]');
     const exists = chats.some(c => c.name === name);
     if (!exists) {
       chats.unshift({
@@ -175,7 +175,7 @@
         preview: previewMsg,
         href: `Texting.html?name=${encodeURIComponent(name)}`
       });
-      localStorage.setItem('seen_chats', JSON.stringify(chats));
+      sessionStorage.setItem('seen_chats', JSON.stringify(chats));
     }
 
     // Remove card with smooth fade
