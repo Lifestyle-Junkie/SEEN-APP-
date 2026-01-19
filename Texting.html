@@ -244,12 +244,12 @@
     .message.loading span::before { left: 0px; }
     .message.loading span::after { left: 7px; animation-delay: 0.3s; }
 
-    /* ── Modified part - bigger input area ── */
+    /* ── Even bigger input area ── */
     .message-box {
-      flex: 0 1 68px;           /* ← increased from 40px */
+      flex: 0 1 96px;
       width: 100%;
       background: rgba(0, 0, 0, 0.3);
-      padding: 12px 10px;       /* slightly more comfortable padding */
+      padding: 16px 10px;
       position: relative;
     }
     .message-box .message-input {
@@ -257,28 +257,28 @@
       border: none;
       outline: none!important;
       resize: none;
-      color: rgba(255, 255, 255, .7);
-      font-size: 13px;          /* ← slightly bigger text (was 11px) */
-      line-height: 1.4;
-      height: 44px;             /* ← main increase - was 17px */
+      color: rgba(255, 255, 255, .85);
+      font-size: 15px;
+      line-height: 1.5;
+      height: 64px;
       margin: 0;
-      padding: 10px 54px 10px 12px; /* more padding, space for send button */
-      width: 100%;              /* full width instead of 80% */
+      padding: 14px 68px 14px 16px;
+      width: 100%;
     }
     .message-box .message-submit {
       position: absolute;
       z-index: 1;
       top: 50%;
-      right: 14px;
+      right: 16px;
       transform: translateY(-50%);
       color: #fff;
       border: none;
       background: var(--mythic-purple);
-      font-size: 11px;
+      font-size: 13px;
       text-transform: uppercase;
       line-height: 1;
-      padding: 8px 14px;
-      border-radius: 12px;
+      padding: 10px 18px;
+      border-radius: 14px;
       outline: none!important;
     }
 
@@ -325,7 +325,7 @@
   <div class="bg"></div>
 
   <script>
-    // ── Your original script (completely unchanged) ──
+    // Original script - unchanged
     function goBack() {
       window.location.href = 'messages.html';
     }
