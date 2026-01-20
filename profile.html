@@ -19,7 +19,7 @@
       color: #fff;
       height: 100dvh;
       overflow: hidden;
-      overscroll-behavior-x: none;
+      overscroll-behavior: none;
     }
     .app-container {
       position: relative;
@@ -32,7 +32,7 @@
       flex-direction: column;
     }
     .dynamic-island {
-      position: absolute;
+      position: fixed;
       top: 12px;
       left: 50%;
       transform: translateX(-50%);
@@ -41,28 +41,59 @@
       background: #000;
       border-radius: 20px;
       z-index: 3000;
+      pointer-events: none;
     }
     .content {
       flex: 1;
       padding: 1.5rem;
-      padding-top: 70px;
+      padding-top: 80px;
       overflow-y: auto;
-      padding-bottom: 120px;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 140px;
     }
     .content::-webkit-scrollbar { display: none; }
-    /* Profile Header Mythic Card */
+
+    /* Burger menu – no bubble/background */
+    .burger-menu {
+      position: fixed;
+      top: 16px;
+      right: 20px;
+      z-index: 5000;
+      padding: 8px;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .burger-line {
+      width: 22px;
+      height: 2.5px;
+      background: var(--mythic-gradient);
+      background-size: 200% 200%;
+      animation: gradientMove 5s ease infinite;
+      margin: 5px 0;
+      border-radius: 1px;
+      transition: all 0.2s ease;
+    }
+    .burger-menu:active .burger-line:nth-child(1) {
+      transform: translateY(7.5px) rotate(45deg);
+    }
+    .burger-menu:active .burger-line:nth-child(2) {
+      opacity: 0;
+    }
+    .burger-menu:active .burger-line:nth-child(3) {
+      transform: translateY(-7.5px) rotate(-45deg);
+    }
+
     .mythic-profile-card {
-      position: relative;
+      margin-top: 24px;
       padding: 1.5px;
       border-radius: 28px;
       background: var(--mythic-gradient);
       background-size: 200% 200%;
-      animation: gradientMove 4s ease infinite;
-      margin-bottom: 2rem;
+      animation: gradientMove 5s ease infinite;
     }
     @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
     .profile-card-inner {
@@ -75,14 +106,13 @@
     }
     .profile-main { display: flex; align-items: center; gap: 1rem; }
     .profile-main img { width: 65px; height: 65px; border-radius: 50%; border: 2px solid #111; object-fit: cover; }
-    /* Sections */
+
     .section-box {
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 22px;
       padding: 1.25rem;
       margin-bottom: 1.25rem;
-      transition: all 0.3s ease;
     }
     .section-title {
       font-size: 0.8rem;
@@ -108,7 +138,7 @@
       border-radius: 8px;
       border: 1px dashed var(--clr-purple);
     }
-    /* Smaller Pencil Button (matches previous size) */
+
     .pencil-btn {
       background: var(--clr-purple);
       color: white;
@@ -121,22 +151,37 @@
       justify-content: center;
       width: 36px;
       height: 36px;
+      position: relative;
+      overflow: hidden;
     }
     .pencil-btn:hover {
       background: var(--clr-purple-dark);
       transform: scale(1.1);
     }
-    .pencil-btn svg {
-      width: 24px;
-      height: 24px;
-    }
+    .pencil-btn svg { width: 24px; height: 24px; }
+
     .pencil-btn .sparkle {
-      width: 16px;
-      height: 16px;
-      right: 4px;
-      top: -4px;
+      position: absolute;
+      right: 2px;
+      top: -8px;
+      width: 18px;
+      height: 18px;
+      opacity: 0;
+      transform: scale(0.6);
+      transition: opacity 0.35s ease, transform 0.5s ease;
+      pointer-events: none;
+      z-index: 10;
     }
-    /* Hashtag System */
+    .pencil-btn:hover .sparkle {
+      opacity: 0.95;
+      transform: scale(1.25);
+      animation: sparkle-twinkle 1.4s ease-in-out infinite;
+    }
+    @keyframes sparkle-twinkle {
+      0%, 100%   { opacity: 0.95; transform: scale(1.25) rotate(0deg); }
+      50%        { opacity: 0.4;  transform: scale(0.85) rotate(12deg); }
+    }
+
     .tag-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
     .tag {
       background: rgba(167, 139, 250, 0.1);
@@ -158,13 +203,17 @@
       border: 1px solid rgba(255,255,255,0.1);
     }
     .tag-input-wrapper input { background: transparent; border: none; outline: none; color: #fff; font-size: 0.85rem; flex: 1; }
-    /* Photo Slots */
+
     .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
     .photo-slot {
-      aspect-ratio: 1/1; background: #111; border-radius: 15px; border: 1.5px dashed #333;
-      display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden;
+      aspect-ratio: 1/1;
+      background: #111;
+      border-radius: 15px;
+      border: 1.5px dashed #333;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; overflow: hidden;
     }
-    /* Save Button */
+
     .save-btn {
       background: var(--mythic-gradient);
       background-size: 200%;
@@ -179,12 +228,12 @@
       box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
       cursor: pointer;
     }
-    /* Preview Modal Overlay */
+
     #previewModal {
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.95);
-      z-index: 5000;
+      z-index: 6000;
       display: none;
       place-items: center;
       padding: 20px;
@@ -192,7 +241,7 @@
     }
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     .animate-mythic { animation: spin 6s linear infinite; }
-    /* Glow Pass Card */
+
     .glow-pass-card {
       background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(236, 72, 153, 0.2));
       border: 1px solid #7c3aed;
@@ -204,16 +253,8 @@
       align-items: center;
       margin-top: 1.5rem;
     }
-    .glow-pass-text h3 {
-      font-weight: 900;
-      font-size: 1rem;
-      letter-spacing: 1px;
-    }
-    .glow-pass-text p {
-      font-size: 0.75rem;
-      opacity: 0.8;
-      margin-top: 4px;
-    }
+    .glow-pass-text h3 { font-weight: 900; font-size: 1rem; letter-spacing: 1px; }
+    .glow-pass-text p { font-size: 0.75rem; opacity: 0.8; margin-top: 4px; }
     .upgrade-btn {
       background: white;
       color: black;
@@ -226,10 +267,22 @@
       transition: transform 0.2s;
     }
     .upgrade-btn:hover { transform: scale(1.05); }
-    /* Nav */
+
     .nav-bar {
-      position: absolute; bottom: 0; width: 100%; height: 90px; background: rgba(0,0,0,0.9);
-      backdrop-filter: blur(20px); display: flex; flex-direction: column; border-top: 1px solid rgba(255,255,255,0.1);
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      max-width: 430px;
+      margin: 0 auto;
+      height: 90px;
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      z-index: 4000;
       padding-bottom: env(safe-area-inset-bottom);
     }
     .button-row { display: flex; justify-content: space-around; align-items: center; flex: 1; }
@@ -240,8 +293,17 @@
 </head>
 <body>
 <div class="app-container">
+
   <div class="dynamic-island"></div>
+
+  <button class="burger-menu" onclick="alert('Menu clicked')">
+    <div class="burger-line"></div>
+    <div class="burger-line"></div>
+    <div class="burger-line"></div>
+  </button>
+
   <div class="content">
+
     <div class="mythic-profile-card">
       <div class="profile-card-inner">
         <div class="profile-main">
@@ -253,21 +315,18 @@
             <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">22 • FLORIDA</p>
           </div>
         </div>
-        <button class="bg-white/10 p-2 rounded-full"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></button>
       </div>
     </div>
 
     <div class="section-box">
       <h2 class="section-title">My Bio
-        <!-- Pencil button moved inside bio section -->
         <button id="editBioBtn" class="pencil-btn group">
           <div class="relative h-6 w-6">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 48 48" class="absolute inset-0">
-              <rect fill="currentColor" transform="rotate(-50, 38, 38)" rx="2" height="6" width="30" y="10" x="25"></rect>
-              <rect fill="#d1d5db" transform="rotate(-50, 31, 18)" rx="1" height="3" width="8" y="10" x="25"></rect>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="absolute inset-0">
+              <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
             </svg>
-            <svg fill="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="sparkle absolute right-1 top-[-6px] h-4 w-4 text-white z-20 hidden group-hover:block">
-              <path clip-rule="evenodd" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" fill-rule="evenodd"></path>
+            <svg fill="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="sparkle">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/>
             </svg>
           </div>
         </button>
@@ -295,7 +354,6 @@
 
     <button class="save-btn" id="saveAndPreview">Save & Preview Card</button>
 
-    <!-- SEEN GLOW PASS -->
     <div class="glow-pass-card">
       <div class="glow-pass-text">
         <h3>SEEN GLOW PASS</h3>
@@ -303,6 +361,7 @@
       </div>
       <button onclick="window.location.href='store.html'" class="upgrade-btn">UPGRADE</button>
     </div>
+
   </div>
 
   <div id="previewModal">
@@ -341,30 +400,20 @@
     </div>
     <div class="home-indicator"></div>
   </nav>
+
 </div>
 
 <input type="file" id="photo-upload" hidden accept="image/*">
 
 <script>
-  // --- Swipe Gesture Logic ---
-  let touchstartX = 0;
-  window.addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; }, false);
-  window.addEventListener('touchend', e => {
-    if (e.changedTouches[0].screenX > touchstartX + 100) window.location.href = 'discover.html';
-  }, false);
-
-  // --- Bio Edit Logic ---
+  // Bio Edit
   const bioText = document.getElementById('bioText');
   const editBioBtn = document.getElementById('editBioBtn');
-
-  // Start read-only
   bioText.contentEditable = "false";
 
   editBioBtn.addEventListener('click', () => {
     bioText.contentEditable = "true";
     bioText.focus();
-
-    // Move cursor to end
     const range = document.createRange();
     const sel = window.getSelection();
     range.selectNodeContents(bioText);
@@ -373,75 +422,68 @@
     sel.addRange(range);
   });
 
-  // Disable editing when clicking outside
   document.addEventListener('click', (e) => {
     if (!bioText.contains(e.target) && !editBioBtn.contains(e.target)) {
       bioText.contentEditable = "false";
     }
   });
 
-  // --- Photo Logic ---
+  // Photo upload
   const uploadInput = document.getElementById('photo-upload');
   let currentSlot = null;
-  const bindSlot = (id) => {
-    const slot = document.getElementById(id);
-    slot.addEventListener('click', () => { currentSlot = slot; uploadInput.click(); });
-  };
-  bindSlot('slot-2'); bindSlot('slot-3');
-  uploadInput.addEventListener('change', (e) => {
-    if (e.target.files && e.target.files[0]) {
+  document.querySelectorAll('.photo-slot:not([style*="border:none"])').forEach(slot => {
+    slot.addEventListener('click', () => {
+      currentSlot = slot;
+      uploadInput.click();
+    });
+  });
+
+  uploadInput.addEventListener('change', e => {
+    if (e.target.files?.[0]) {
       const url = URL.createObjectURL(e.target.files[0]);
       currentSlot.innerHTML = `<img src="${url}" class="w-full h-full object-cover">`;
       currentSlot.style.border = 'none';
-      if (currentSlot.id === 'p1') document.getElementById('previewImg').src = url;
     }
   });
 
-  // --- Hashtag Logic ---
+  // Hashtags
   const tagInput = document.getElementById('tagInput');
   const addTagBtn = document.getElementById('addTagBtn');
   const tagContainer = document.getElementById('tagContainer');
+
   function addTag() {
     let val = tagInput.value.trim();
-    if (val !== "") {
-      if (!val.startsWith('#')) val = '#' + val;
-      const tag = document.createElement('div');
-      tag.className = 'tag';
-      tag.innerHTML = `${val} <span class="opacity-40 cursor-pointer" onclick="this.parentElement.remove()">×</span>`;
-      tagContainer.appendChild(tag);
-      tagInput.value = "";
-    }
+    if (!val) return;
+    if (!val.startsWith('#')) val = '#' + val;
+    const tag = document.createElement('div');
+    tag.className = 'tag';
+    tag.innerHTML = `${val} <span class="opacity-40 cursor-pointer" onclick="this.parentElement.remove()">×</span>`;
+    tagContainer.appendChild(tag);
+    tagInput.value = '';
   }
+
   addTagBtn.addEventListener('click', addTag);
-  tagInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') addTag(); });
+  tagInput.addEventListener('keypress', e => { if (e.key === 'Enter') addTag(); });
 
-  // --- SAVE & PREVIEW LOGIC ---
-  const previewModal = document.getElementById('previewModal');
-  const saveBtn = document.getElementById('saveAndPreview');
-  const closePreview = document.getElementById('closePreview');
-
-  saveBtn.onclick = () => {
-    const currentBio = document.getElementById('bioText').innerText;
-    const tags = Array.from(tagContainer.querySelectorAll('.tag')).map(t => t.innerText.replace('×', '').trim());
-    const profileImg = document.querySelector('#p1 img')?.src || document.getElementById('p1').src;
-
-    document.getElementById('previewBio').innerText = currentBio;
-    document.getElementById('previewImg').src = profileImg;
+  // Save & Preview
+  document.getElementById('saveAndPreview').onclick = () => {
+    document.getElementById('previewBio').textContent = bioText.textContent.trim();
+    document.getElementById('previewImg').src = document.querySelector('#p1 img')?.src || "https://randomuser.me/api/portraits/women/44.jpg";
 
     const hashContainer = document.getElementById('previewHashtags');
-    hashContainer.innerHTML = "";
-    tags.forEach(t => {
+    hashContainer.innerHTML = '';
+    tagContainer.querySelectorAll('.tag').forEach(t => {
       const span = document.createElement('span');
       span.className = "text-[10px] bg-purple-500/20 text-purple-300 px-2 py-1 rounded-md font-bold";
-      span.innerText = t;
+      span.textContent = t.textContent.replace('×', '').trim();
       hashContainer.appendChild(span);
     });
 
-    previewModal.style.display = 'grid';
+    document.getElementById('previewModal').style.display = 'grid';
   };
 
-  closePreview.onclick = () => {
-    previewModal.style.display = 'none';
+  document.getElementById('closePreview').onclick = () => {
+    document.getElementById('previewModal').style.display = 'none';
   };
 </script>
 </body>
