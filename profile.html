@@ -73,7 +73,6 @@
       padding-top: 80px;
       padding-bottom: 140px;
     }
-
     /* Burger */
     .burger-menu {
       position: fixed;
@@ -97,7 +96,6 @@
     .burger-menu:active .burger-line:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
     .burger-menu:active .burger-line:nth-child(2) { opacity: 0; }
     .burger-menu:active .burger-line:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
-
     .mythic-profile-card {
       margin-top: 20px;
       padding: 1.5px;
@@ -107,8 +105,8 @@
       animation: gradientMove 5s ease infinite;
     }
     @keyframes gradientMove {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
     .profile-card-inner {
@@ -124,7 +122,6 @@
     .profile-main h1, .profile-main p {
       color: #ffffff !important;
     }
-
     .section-box {
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
@@ -156,7 +153,6 @@
       border-radius: 8px;
       border: 1px dashed var(--clr-purple);
     }
-
     .pencil-btn {
       background: var(--clr-purple);
       color: white;
@@ -177,7 +173,6 @@
       transform: scale(1.1);
     }
     .pencil-btn svg { width: 24px; height: 24px; }
-
     .pencil-btn .sparkle {
       position: absolute;
       right: 2px;
@@ -196,10 +191,9 @@
       animation: sparkle-twinkle 1.4s ease-in-out infinite;
     }
     @keyframes sparkle-twinkle {
-      0%, 100%   { opacity: 0.95; transform: scale(1.25) rotate(0deg); }
-      50%        { opacity: 0.4;  transform: scale(0.85) rotate(12deg); }
+      0%, 100% { opacity: 0.95; transform: scale(1.25) rotate(0deg); }
+      50% { opacity: 0.4; transform: scale(0.85) rotate(12deg); }
     }
-
     .tag-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
     .tag {
       background: rgba(167, 139, 250, 0.1);
@@ -221,7 +215,6 @@
       border: 1px solid rgba(255,255,255,0.1);
     }
     .tag-input-wrapper input { background: transparent; border: none; outline: none; color: #fff; font-size: 0.85rem; flex: 1; }
-
     .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
     .photo-slot {
       aspect-ratio: 1/1;
@@ -231,7 +224,6 @@
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; overflow: hidden;
     }
-
     .save-btn {
       background: var(--mythic-gradient);
       background-size: 200%;
@@ -246,7 +238,6 @@
       box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
       cursor: pointer;
     }
-
     .glow-pass-card {
       background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(236, 72, 153, 0.2));
       border: 1px solid #7c3aed;
@@ -261,7 +252,6 @@
     }
     .glow-pass-text h3 { font-weight: 900; font-size: 1rem; letter-spacing: 1px; color: #ffffff; }
     .glow-pass-text p { font-size: 0.75rem; opacity: 0.8; margin-top: 4px; color: #ffffff; }
-
     /* Upgrade button – white, rounded, black text */
     .upgrade-btn {
       background: #ffffff;
@@ -280,7 +270,6 @@
       transform: scale(1.05);
       box-shadow: 0 6px 16px rgba(0,0,0,0.25);
     }
-
     #previewModal {
       position: fixed;
       inset: 0;
@@ -293,7 +282,6 @@
     }
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     .animate-mythic { animation: spin 6s linear infinite; }
-
     .nav-bar {
       position: fixed;
       bottom: 0;
@@ -319,21 +307,16 @@
   </style>
 </head>
 <body>
-
 <div class="fullscreen-lock">
   <div class="app-container">
-
     <div class="dynamic-island"></div>
-
-    <button class="burger-menu" onclick="alert('Menu clicked')">
+    <button class="burger-menu" onclick="window.location.href='settings.html'">
       <div class="burger-line"></div>
       <div class="burger-line"></div>
       <div class="burger-line"></div>
     </button>
-
     <div class="scroll-container">
       <div class="content">
-
         <div class="mythic-profile-card">
           <div class="profile-card-inner">
             <div class="profile-main">
@@ -347,7 +330,6 @@
             </div>
           </div>
         </div>
-
         <div class="section-box">
           <h2 class="section-title">My Bio
             <button id="editBioBtn" class="pencil-btn group">
@@ -363,7 +345,6 @@
           </h2>
           <div id="bioText" class="bio-text" contenteditable="false">Write your bio here...</div>
         </div>
-
         <div class="section-box">
           <h2 class="section-title">Hashtags</h2>
           <div class="tag-input-wrapper">
@@ -372,7 +353,6 @@
           </div>
           <div id="tagContainer" class="tag-container"></div>
         </div>
-
         <div class="section-box">
           <h2 class="section-title">Gallery</h2>
           <div class="photo-grid">
@@ -381,9 +361,7 @@
             <div class="photo-slot" id="slot-3"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></div>
           </div>
         </div>
-
         <button class="save-btn" id="saveAndPreview">Save & Preview Card</button>
-
         <div class="glow-pass-card">
           <div class="glow-pass-text">
             <h3>SEEN GLOW PASS</h3>
@@ -391,10 +369,8 @@
           </div>
           <button onclick="window.location.href='store.html'" class="upgrade-btn">UPGRADE</button>
         </div>
-
       </div>
     </div>
-
     <div id="previewModal">
       <div id="card-container" class="w-full max-w-[380px] h-[600px] relative">
         <article id="main-card" class="rounded-3xl overflow-hidden shadow-2xl relative w-full h-full">
@@ -421,7 +397,6 @@
         </article>
       </div>
     </div>
-
     <nav class="nav-bar">
       <div class="button-row">
         <button onclick="window.location.href='discover.html'"><svg class="nav-icon" viewBox="0 0 1024 1024" fill="currentColor"><path d="M946.5 505L560.1 118.8l-25.9-25.9a31.5 31.5 0 0 0-44.4 0L77.5 505a63.9 63.9 0 0 0-18.8 46c.4 35.2 29.7 63.3 64.9 63.3h42.5V940h691.8V614.3h43.4c17.1 0 33.2-6.7 45.3-18.8a63.6 63.6 0 0 0 18.7-45.3c0-17-6.7-33.1-18.8-45.2zM568 868H456V664h112v204zm217.9-325.7V868H632V640c0-22.1-17.9-40-40-40H432c-22.1 0-40 17.9-40 40v228H238.1V542.3h-96l370-369.7 23.1 23.1L882 542.3h-96.1z"></path></svg></button>
@@ -431,7 +406,6 @@
       </div>
       <div class="home-indicator"></div>
     </nav>
-
   </div>
 </div>
 
@@ -442,7 +416,6 @@
   const bioText = document.getElementById('bioText');
   const editBioBtn = document.getElementById('editBioBtn');
   bioText.contentEditable = "false";
-
   editBioBtn.addEventListener('click', () => {
     bioText.contentEditable = "true";
     bioText.focus();
@@ -453,7 +426,6 @@
     sel.removeAllRanges();
     sel.addRange(range);
   });
-
   document.addEventListener('click', (e) => {
     if (!bioText.contains(e.target) && !editBioBtn.contains(e.target)) {
       bioText.contentEditable = "false";
@@ -469,7 +441,6 @@
       uploadInput.click();
     });
   });
-
   uploadInput.addEventListener('change', e => {
     if (e.target.files?.[0]) {
       const url = URL.createObjectURL(e.target.files[0]);
@@ -482,7 +453,6 @@
   const tagInput = document.getElementById('tagInput');
   const addTagBtn = document.getElementById('addTagBtn');
   const tagContainer = document.getElementById('tagContainer');
-
   function addTag() {
     let val = tagInput.value.trim();
     if (!val) return;
@@ -493,7 +463,6 @@
     tagContainer.appendChild(tag);
     tagInput.value = '';
   }
-
   addTagBtn.addEventListener('click', addTag);
   tagInput.addEventListener('keypress', e => { if (e.key === 'Enter') addTag(); });
 
@@ -501,7 +470,6 @@
   document.getElementById('saveAndPreview').onclick = () => {
     document.getElementById('previewBio').textContent = bioText.textContent.trim();
     document.getElementById('previewImg').src = document.querySelector('#p1 img')?.src || "https://randomuser.me/api/portraits/women/44.jpg";
-
     const hashContainer = document.getElementById('previewHashtags');
     hashContainer.innerHTML = '';
     tagContainer.querySelectorAll('.tag').forEach(t => {
@@ -510,7 +478,6 @@
       span.textContent = t.textContent.replace('×', '').trim();
       hashContainer.appendChild(span);
     });
-
     document.getElementById('previewModal').style.display = 'grid';
   };
 
